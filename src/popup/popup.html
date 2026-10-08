@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What Sites See</title>
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="popup.css">
+<script type="module" src="popup.js"></script>
+</head>
+<body>
+  <header class="mast">
+    <span class="wm"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="var(--stamp)"/></svg>What Sites See</span>
+    <span class="host mono" id="host"></span>
+  </header>
+
+  <section class="perm" id="perm" hidden>
+    <p><strong>Site access is off.</strong> Your browser needs your OK before this extension can watch pages.</p>
+    <button id="grant">Allow on all sites</button>
+    <p class="sub">Then reload the page you want to check.</p>
+  </section>
+
+  <section class="summary">
+    <div class="score" aria-live="polite"><span id="score">–</span><small>/100</small></div>
+    <div><div class="label" id="label">Loading…</div><div class="sub" id="sub"></div></div>
+  </section>
+  <div class="meter" aria-hidden="true"><span id="fill"></span></div>
+
+  <ol class="items" id="items"></ol>
+  <p class="empty" id="empty" hidden></p>
+
+  <details class="hosts" id="hosts" hidden>
+    <summary id="hosts-sum"></summary>
+    <ul class="mono" id="hosts-list"></ul>
+  </details>
+
+  <footer><button class="link" id="open-history">Every site that has fingerprinted you →</button></footer>
+</body>
+</html>

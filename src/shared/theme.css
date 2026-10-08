@@ -1,0 +1,24 @@
+/* Same palette as What Sites See v1. System fonts only: a privacy tool shouldn't ping
+   Google Fonts every time you open it. */
+:root {
+  --bg: #e2e6de; --paper: #eff2ec; --ink: #1a201c; --muted: #5b665d; --line: #c2c9be;
+  --stamp: #b8392a; --ok: #2f7d4f; --warn: #9a6400;
+  --serif: Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111512; --paper: #191e1a; --ink: #e1e6dd; --muted: #92a092; --line: #2b342d;
+    --stamp: #ff7462; --ok: #6cc08a; --warn: #e0a63a;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); line-height: 1.5; }
+.mono { font-family: var(--mono); }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
+.wm { display: flex; gap: 8px; align-items: center; font-weight: 700; white-space: nowrap; }
+.wm svg { width: 22px; height: 22px; flex: none; }
+.pill { display: inline-block; font: 700 11px var(--mono); color: #fff; background: var(--grade, var(--muted)); border-radius: 3px; padding: 1px 6px; }

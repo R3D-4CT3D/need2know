@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Control test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:640px;margin:40px auto;padding:0 16px}</style></head>
+<body>
+  <h1>Control test</h1>
+  <p>Ordinary things real sites do with their own code. The badge should read <b>2</b> (a harmless canvas read) and nothing else. Press <kbd>/</kbd> to test the site's own shortcut.</p>
+  <p id="status"></p>
+  <script>
+    // An image preview: draw shapes, export. No text, so it's not canvas fingerprinting.
+    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
+    const x = c.getContext('2d'); x.fillStyle = '#c33'; x.fillRect(8, 8, 48, 48); c.toDataURL();
+    // Text layout with one font.
+    x.font = '14px sans-serif'; x.measureText('hello');
+    // The site's own keyboard shortcut: first-party, so it isn't scored.
+    document.addEventListener('keydown', e => { if (e.key === '/') document.getElementById('status').textContent = 'Shortcut pressed'; });
+    // Responsive layout reads a couple of screen values: far below a sweep.
+    void [screen.width, screen.height];
+  </script>
+</body>
+</html>

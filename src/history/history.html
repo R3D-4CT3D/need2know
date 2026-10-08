@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sites That Fingerprinted You</title>
+<link rel="icon" href="../icons/icon-32.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="history.css">
+<script type="module" src="history.js"></script>
+</head>
+<body>
+<main>
+  <header class="mast">
+    <span class="wm"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="var(--stamp)"/></svg>What Sites See</span>
+  </header>
+  <h1>Sites that fingerprinted you</h1>
+  <p class="lede" id="summary">Loading…</p>
+  <div class="tools">
+    <input id="filter" type="search" placeholder="Filter by site" aria-label="Filter by site">
+    <button id="clear">Clear history</button>
+  </div>
+  <table>
+    <thead><tr><th>Site</th><th>Worst score</th><th>Caught</th><th>Last seen</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="note">Stored only in this browser. Private and incognito windows are never recorded.</p>
+</main>
+</body>
+</html>

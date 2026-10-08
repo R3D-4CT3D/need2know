@@ -1,0 +1,37 @@
+body { width: 380px; padding: 14px 16px 12px; font-size: 14px; }
+.mast { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.host { color: var(--muted); font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.perm { margin-top: 14px; padding: 10px 12px; border: 1.5px solid var(--stamp); border-radius: 5px; background: var(--paper); }
+.perm p { margin: 0 0 8px; font-size: 13px; }
+.perm button { background: var(--stamp); color: #fff; border: 0; border-radius: 4px; padding: 6px 12px; font-weight: 700; }
+.perm .sub { margin: 8px 0 0; }
+
+.summary { display: flex; align-items: center; gap: 14px; margin: 16px 0 10px; }
+.score { font: 700 44px/1 var(--mono); color: var(--grade, var(--muted)); white-space: nowrap; }
+.score small { font-size: 13px; font-weight: 400; color: var(--muted); }
+.label { font-weight: 700; font-size: 17px; line-height: 1.25; }
+.sub { color: var(--muted); font-size: 12.5px; line-height: 1.4; margin-top: 2px; }
+
+.meter { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
+.meter span { display: block; height: 100%; width: 0; background: var(--grade, var(--muted)); transition: width .4s; }
+
+.items { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--ink); }
+.item { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.item .top { display: flex; justify-content: space-between; gap: 10px; font-weight: 700; }
+.item .pts { font: 700 12px var(--mono); color: var(--stamp); white-space: nowrap; padding-top: 2px; }
+.item .why { margin: 3px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+.scripts { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.scripts li { font: 11.5px/1.6 var(--mono); background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 0 6px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scripts li.third { border-color: var(--stamp); }
+.scripts .tag { color: var(--stamp); }
+
+.empty { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+
+.hosts { margin-top: 12px; font-size: 13px; }
+.hosts summary { cursor: pointer; color: var(--muted); }
+.hosts ul { margin: 6px 0 0; padding-left: 18px; font-size: 12px; max-height: 140px; overflow: auto; }
+
+footer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.link { background: none; border: 0; padding: 0; color: var(--stamp); font-weight: 700; font-size: 13px; }
+.link:hover { text-decoration: underline; }
