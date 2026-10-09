@@ -30,7 +30,8 @@
     "scripting",
     "declarativeNetRequest",
     "privacy",
-    "alarms"
+    "alarms",
+    "webRequest"
   ],
   "host_permissions": [
     "<all_urls>"

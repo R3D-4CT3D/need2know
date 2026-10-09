@@ -41,10 +41,21 @@ for (const name of wanted.length ? wanted : Object.keys(TARGETS)) {
   const out = `${root}dist/${name}/`;
   await rm(out, { recursive: true, force: true });
   await mkdir(out, { recursive: true });
-  await cp(src, out, { recursive: true, filter: f => !f.endsWith('manifest.json') });
+  await cp(src, out, { recursive: true, filter: f => !f.endsWith('manifest.json') && !f.endsWith('worker-prelude.js') });
+  await inlineWorkerPrelude(out);
   await writeFile(out + 'manifest.json', JSON.stringify(TARGETS[name](base), null, 2) + '\n');
   // Network blocklists are generated from shared/vendors.js, so there's one list to maintain.
   await mkdir(out + 'rules', { recursive: true });
   for (const [id, rules] of Object.entries(buildRulesets())) await writeFile(`${out}rules/${id}.json`, JSON.stringify(rules, null, 2) + '\n');
   console.log(`built dist/${name}`);
+}
+
+// hooks.js starts Web Workers from a blob: script, so the worker prelude has to travel inside
+// hooks.js as a string rather than as a separate file pages could fetch.
+async function inlineWorkerPrelude(out) {
+  const TOKEN = "'__WSS_WORKER_PRELUDE__'";
+  const hooks = await readFile(out + 'content/hooks.js', 'utf8');
+  if (hooks.split(TOKEN).length !== 2) throw new Error('hooks.js must contain the worker prelude token exactly once');
+  const prelude = (await readFile(src + 'content/worker-prelude.js', 'utf8')).trim();
+  await writeFile(out + 'content/hooks.js', hooks.replace(TOKEN, () => JSON.stringify(prelude)));
 }

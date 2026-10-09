@@ -147,6 +147,16 @@ try {
     await Promise.all([page.close(), popup.page.close()]);
   }
 
+  console.log('\nWeb Workers');
+  await setSettings({}, 'wss-observe'); // back to defaults: protection off everywhere
+  const countOf = (report, id) => report.items.find(i => i.id === id)?.count ?? 0;
+  const w0 = await visit(SITE + 'worker.html');
+  const W0 = w0.result ?? {};
+  check('workers still work when wrapped: relative importScripts/import, fetch and location', !W0.error && W0.classic?.dep && W0.module?.dep && W0.classic?.fetchOk && W0.module?.fetchOk
+    && W0.classic?.location?.endsWith('/worker/fp.js') && W0.module?.location?.endsWith('/worker/fp-module.js'), JSON.stringify(W0).slice(0, 300));
+  check('the extension\'s setup message never reaches the worker\'s own code', W0.classic?.firstMessage === 'go' && W0.module?.firstMessage === 'go');
+  check('fingerprinting inside workers is detected', countOf(w0.report, 'canvas-fp') >= 3 && countOf(w0.report, 'webgl-gpu') >= 3, `canvas ${countOf(w0.report, 'canvas-fp')}, gpu ${countOf(w0.report, 'webgl-gpu')}`);
+
   console.log('\nProtection (on by default)');
   await setSettings({ protectDefault: true }, 'wss-protect');
   const a1 = await visit(SITE + 'protect.html');
@@ -166,6 +176,15 @@ try {
   const [f1, f2, f3] = [await visit(SITE + 'escape.html?v=fingerprintjs'), await visit(SITE + 'escape.html?v=fingerprintjs'), await visit(OTHER_SITE + 'escape.html?v=fingerprintjs')];
   check('FingerprintJS visitorId: stable on one site', fpId(f1) && fpId(f1) === fpId(f2), `${fpId(f1)} / ${fpId(f2)}`);
   check('FingerprintJS visitorId: different on another site', fpId(f1) && fpId(f3) && fpId(f1) !== fpId(f3), `${fpId(f1)} / ${fpId(f3)}`);
+  {
+    const w1 = await visit(SITE + 'worker.html');
+    const R = w1.result ?? {};
+    const same = k => R.page?.[k] === R.classic?.[k] && R.page?.[k] === R.module?.[k];
+    check('workers get the same protection as the page: canvas, GPU and cores match', !R.error && same('canvas') && same('gpu') && same('cores') && / Graphics/.test(R.classic?.gpu ?? '') && R.classic?.canvas !== W0.classic?.canvas, JSON.stringify({ page: R.page, classic: R.classic }).slice(0, 400));
+    const w2 = await visit(SITE + 'worker.html?csp=strict');
+    const C = w2.result ?? {};
+    check('strict CSP: workers aren\'t wrapped and keep working (not covered there)', !C.error && C.classic?.dep && C.classic?.canvas === W0.classic?.canvas && countOf(w2.report, 'canvas-fp') === 1 && !w2.errors.length, JSON.stringify(C).slice(0, 300));
+  }
   check('popup statuses: canvas neutralized, GPU neutralized', statusOf(a1.report, 'canvas-fp') === 'neutralized' && statusOf(a1.report, 'webgl-gpu') === 'neutralized');
 
   {

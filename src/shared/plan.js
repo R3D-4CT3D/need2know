@@ -15,7 +15,7 @@ const sitesSetTo = (s, mode) => Object.keys(s.sites).filter(site => s.sites[site
 /* ---------- content scripts ---------- */
 
 // One file per defense, so only the ones the user enabled are injected. core.js goes first
-// and shares helpers; seal.js removes them before any page script runs.
+// and shares helpers; hooks.js, always last, removes them before any page script runs.
 export const DEFENSE_FILES = {
   canvas: 'content/protect/canvas.js',
   audio: 'content/protect/audio.js',
@@ -27,7 +27,7 @@ export const DEFENSE_FILES = {
 
 export function protectFiles(s) {
   const on = Object.keys(DEFENSE_FILES).filter(k => s.defenses[k]);
-  return on.length ? ['content/protect/core.js', ...on.map(k => DEFENSE_FILES[k]), 'content/protect/seal.js'] : [];
+  return on.length ? ['content/protect/core.js', ...on.map(k => DEFENSE_FILES[k])] : [];
 }
 
 // Scripts in the page's world. Order inside `js` matters: protection runs before hooks.js so

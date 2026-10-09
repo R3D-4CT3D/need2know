@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Web Worker test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}pre{font-size:13px;white-space:pre-wrap}</style></head>
+<body>
+  <h1>Web Worker test</h1>
+  <p>Fingerprints from a classic and a module Web Worker, and from the page, using identical code. With protection on, the worker should give the same answers as the page. Add <code>?csp=strict</code> to serve the page with a CSP that forbids blob: workers: the workers must still work.</p>
+  <pre id="out">Measuring…</pre>
+  <p id="status"></p>
+  <script src="worker/dep.js"></script>
+  <script>
+  addEventListener('load', async () => {
+    const run = (url, options) => new Promise((resolve, reject) => {
+      const w = new Worker(url, options);
+      w.onmessage = e => { resolve(e.data); w.terminate(); };
+      w.onerror = e => reject(new Error(e.message || 'worker failed to start'));
+      w.postMessage('go');
+      setTimeout(() => reject(new Error('worker timed out')), 8000);
+    });
+    const r = {};
+    try {
+      r.page = await self.fingerprint({});
+      r.classic = await run('worker/fp.js');
+      r.module = await run('worker/fp-module.js', { type: 'module' });
+    } catch (e) { r.error = e.message; }
+    document.getElementById('out').textContent = JSON.stringify(r, null, 2);
+    const st = document.getElementById('status'); st.dataset.result = JSON.stringify(r); st.dataset.done = '1';
+    st.textContent = r.error ? 'error: ' + r.error : 'done';
+  });
+  </script>
+</body>
+</html>

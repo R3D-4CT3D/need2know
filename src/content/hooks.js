@@ -1,8 +1,14 @@
 // Runs in the page's own JavaScript world ("MAIN") at document_start, before any page script.
 // It wraps the browser APIs that fingerprinters rely on, notes which script called them, and
 // hands tallies to bridge.js. It never changes what an API returns, so sites behave normally.
+// It also extends the same watching (and, on protected pages, protection) into Web Workers.
 (() => {
   'use strict';
+
+  // Protection files, when present, ran just before this one and left their shared helpers on
+  // window. Take what workers need, then remove it before any page script can see it.
+  const protection = window.__wssProtect || null;
+  delete window.__wssProtect;
 
   const CHANNEL = 'wss:report';
   const FLUSH_MS = 300;
@@ -56,11 +62,13 @@
   let timer = 0;
 
   function hit(tech, extra) {
-    const src = caller(tech);
+    add(tech, caller(tech), 1, extra);
+  }
+  function add(tech, src, n, extra) {
     const key = tech + '\u0000' + (src || '');
     const row = tally.get(key);
-    if (row) { row[2]++; if (extra !== undefined) row[3] = extra; }
-    else tally.set(key, [tech, src, 1, extra]);
+    if (row) { row[2] += n; if (typeof extra === 'number') row[3] = Math.max(row[3] ?? 0, extra); }
+    else tally.set(key, [tech, src, n, extra]);
     if (!timer) timer = later(flush, FLUSH_MS);
   }
 
@@ -184,4 +192,70 @@
     const d = W.document;
     if (target === W || target === d || target === d.documentElement || target === d.body) hit('key-listen');
   });
+
+  /* ---------- Web Workers ---------- */
+  // Content scripts can't run inside workers, so each new Worker starts from a small blob:
+  // script that runs worker-prelude.js (detection, plus the page's protection if it has any)
+  // and then loads the original script. Results come back on a private MessagePort.
+  // Only where the page's Content-Security-Policy allows blob: workers, which the background
+  // reads from the response headers; anywhere else the worker runs untouched rather than broken.
+  // SharedWorker and ServiceWorker aren't covered: wrapping them would change which worker the
+  // page connects to.
+  const PRELUDE = '__WSS_WORKER_PRELUDE__'; // replaced with worker-prelude.js by scripts/build.mjs
+  const ownDoc = W.document;
+  const NativeWorker = W.Worker;
+  if (PRELUDE.includes('wssWorkerPrelude') && NativeWorker) {
+    const detailOf = getDesc(CustomEvent.prototype, 'detail').get;
+    const random32 = () => crypto.getRandomValues(new Uint32Array(1))[0];
+    const { createObjectURL, revokeObjectURL } = URL;
+    const BlobCtor = Blob, URLCtor = URL, ChannelCtor = MessageChannel;
+    const postMessage = NativeWorker.prototype.postMessage;
+    const querySelector = Document.prototype.querySelector;
+    const parse = JSON.parse;
+
+    // Ask the bridge, privately (same pattern as protection's seed), whether blob: workers are allowed.
+    let blobOK = false;
+    const channel = 'wss:' + random32().toString(36) + random32().toString(36);
+    apply(listen, ownDoc, [channel, e => {
+      try { const m = parse(String(apply(detailOf, e, []))); if (typeof m.blobWorkers === 'boolean') blobOK = m.blobWorkers; } catch (_) { /* ignore */ }
+    }]);
+    let delivered = false;
+    const hello = () => {
+      if (!delivered) delivered = !apply(dispatch, ownDoc, [new EventCtor('wss:hooks-hello', { detail: stringify({ channel }), cancelable: true })]);
+    };
+    apply(listen, ownDoc, ['wss:bridge-ready', hello]);
+    hello();
+
+    const start = (target, args, newTarget) => {
+      const [url, options] = args;
+      // A <meta> CSP can also forbid blob: workers; don't try to interpret it, just stand aside.
+      if (!blobOK || apply(querySelector, ownDoc, ['meta[http-equiv="Content-Security-Policy" i]'])) return null;
+      const href = new URLCtor(String(url), ownDoc.baseURI).href;
+      if (!/^(https?|blob):/.test(href)) return null;
+      const module = !!options && options.type === 'module';
+      const config = { url: href, module, protect: protection ? protection.workerConfig() : null };
+      const source = module
+        ? `const ready = (${PRELUDE})(${stringify(config)});\ntry { await import(${stringify(href)}); } finally { ready(); }`
+        : `(${PRELUDE})(${stringify(config)});\nimportScripts(${stringify(href)});`;
+      const blobUrl = createObjectURL(new BlobCtor([source], { type: 'text/javascript' }));
+      const worker = Reflect.construct(target, [blobUrl, options], newTarget);
+      later(() => revokeObjectURL(blobUrl), 30000); // after the worker has surely fetched it
+      const { port1, port2 } = new ChannelCtor();
+      port1.onmessage = e => {
+        if (!Array.isArray(e.data)) return;
+        for (const [tech, src, n, extra] of e.data) if (typeof tech === 'string' && typeof n === 'number') add(tech, src, n, extra);
+      };
+      apply(postMessage, worker, [{ __wss: true }, [port2]]);
+      return worker;
+    };
+    const d = getDesc(W, 'Worker');
+    d.value = new ProxyCtor(NativeWorker, {
+      construct(target, args, newTarget) {
+        let worker = null;
+        try { worker = start(target, args, newTarget); } catch (_) { /* fall back to the real thing */ }
+        return worker || Reflect.construct(target, args, newTarget);
+      },
+    });
+    defineProp(W, 'Worker', d);
+  }
 })();

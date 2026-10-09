@@ -49,6 +49,21 @@
     });
     schedule();
   });
+  // hooks.js asks, privately, whether this page's CSP allows blob: workers (Web Worker coverage).
+  let hooksGreeted = false;
+  document.addEventListener('wss:hooks-hello', e => {
+    if (hooksGreeted || typeof e.detail !== 'string') return;
+    let hello;
+    try { hello = JSON.parse(e.detail); } catch { return; }
+    if (typeof hello?.channel !== 'string') return;
+    hooksGreeted = true;
+    e.preventDefault();
+    Promise.resolve(post({ type: 'frame-info' })).then(info => {
+      if (typeof info?.blobWorkers === 'boolean') {
+        document.dispatchEvent(new CustomEvent(hello.channel, { detail: JSON.stringify({ blobWorkers: info.blobWorkers }) }));
+      }
+    });
+  });
   document.dispatchEvent(new CustomEvent('wss:bridge-ready'));
 
   /* ---------- tallies from hooks.js ---------- */

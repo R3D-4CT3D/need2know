@@ -1,8 +1,8 @@
 // Protection, part 1 of 3: shared machinery. Runs in the page's own world at document_start,
 // before the defense files and hooks.js. Each defense lives in its own file so only the ones the
 // user enabled are injected (see shared/plan.js). This file hands its helpers to them through a
-// temporary property on window; seal.js deletes it before any page script runs, so pages never
-// see it.
+// temporary property on window; hooks.js (always last) deletes it before any page script runs,
+// so pages never see it.
 //
 // Two strategies, both used by Brave and Firefox:
 //   noise    canvas, WebGL pixels and audio get tiny changes, seeded per site and per browser
@@ -113,9 +113,9 @@
   }
 
   // Defense files register themselves, so Web Workers can be given the same set (hooks.js).
-  const enabled = new Set();
-  const enable = name => enabled.add(name);
-  const workerConfig = () => on ? { seed: seedNow(), defenses: [...enabled] } : null;
+  const enabled = new Map(); // defense -> data it shares with workers
+  const enable = (name, data = null) => enabled.set(name, data);
+  const workerConfig = () => on ? { seed: seedNow(), defenses: [...enabled.keys()], fonts: enabled.get('fonts') } : null;
 
   Object.defineProperty(W, '__wssProtect', {
     configurable: true,

@@ -38,7 +38,10 @@ async function handle(req, res) {
   try {
     const raw = await readFile(file);
     const body = /\.(html|js)$/.test(file) ? retarget(raw) : raw;
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream', 'cache-control': 'no-store' }).end(body);
+    const headers = { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream', 'cache-control': 'no-store' };
+    // ?csp=strict serves a page whose CSP forbids blob: workers, like many large sites.
+    if (new URL(req.url, 'http://x').searchParams.get('csp') === 'strict') headers['content-security-policy'] = "worker-src 'self'";
+    res.writeHead(200, headers).end(body);
   } catch {
     res.writeHead(404).end('Not found');
   }

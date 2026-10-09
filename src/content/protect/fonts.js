@@ -10,7 +10,6 @@
   const k = window.__wssProtect;
   if (!k) return;
   const { W, P, apply, doc, override, aroundGetter, enable } = k;
-  enable('fonts');
 
   // Fonts that ship with each OS. Kept to the core set; anything else counts as "installed by
   // you" and is hidden.
@@ -39,6 +38,7 @@
   const os = /Windows/.test(ua) ? 'windows' : /Android/.test(ua) ? 'android' : /CrOS/.test(ua) ? 'chromeos'
     : /Mac OS X|iPhone|iPad/.test(ua) ? 'mac' : 'linux';
   const standard = new Set(STANDARD[os].map(f => f.toLowerCase()));
+  enable('fonts', [...standard]); // workers get the same list
   const GENERIC = new Set(['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui', 'ui-serif', 'ui-sans-serif',
     'ui-monospace', 'ui-rounded', 'emoji', 'math', 'fangsong', '-apple-system', 'blinkmacsystemfont', 'inherit', 'initial', 'unset']);
 

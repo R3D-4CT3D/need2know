@@ -7,6 +7,7 @@ import { buildReport, GRADES } from './shared/scoring.js';
 import { hostOf, siteOf } from './shared/domain.js';
 import { loadSettings, saveSettings, withSite, isPaused } from './shared/settings.js';
 import { VENDORS } from './shared/vendors.js';
+import { allowsBlobWorkers } from './shared/csp.js';
 import { scriptPlan, rulesetPlan, dynamicRules, sessionRules, DYNAMIC_RULE_BASE, SESSION_RULE_BASE } from './shared/plan.js';
 
 const HISTORY_LIMIT = 500;
@@ -124,6 +125,15 @@ async function setSite(site, on, tabId) {
   if (Number.isInteger(tabId)) await api.tabs.reload(tabId);
 }
 
+/* ---------- page CSP, for Web Worker coverage ---------- */
+// Whether each frame's Content-Security-Policy allows blob: workers, from its response headers.
+// Read-only: nothing is blocked or modified here.
+const frameCsp = new Map(); // "tabId:frameId" -> boolean
+api.webRequest?.onHeadersReceived.addListener(d => {
+  if (d.tabId < 0) return;
+  frameCsp.set(`${d.tabId}:${d.frameId}`, allowsBlobWorkers(d.responseHeaders ?? []));
+}, { urls: ['<all_urls>'], types: ['main_frame', 'sub_frame'] }, ['responseHeaders']);
+
 /* ---------- per-site noise seeds ---------- */
 // One random secret per browser session; each site's seed is a hash of the secret and the
 // top-level site. Same site → same seed for the whole session; different sites can't be linked.
@@ -150,6 +160,11 @@ api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'seed') {
     seedFor(sender).then(sendResponse, () => sendResponse(null));
     return true; // keep the channel open for the async reply
+  }
+  if (msg.type === 'frame-info') {
+    const key = `${sender.tab?.id}:${sender.frameId}`;
+    sendResponse({ blobWorkers: frameCsp.get(key) ?? null });
+    return;
   }
   if (msg.type === 'pause') {
     // From the popup: 0 resumes, -1 pauses until restart, otherwise a duration in minutes.
@@ -183,6 +198,7 @@ api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 api.tabs.onRemoved.addListener(tabId => {
   tabs.delete(tabId);
+  for (const key of frameCsp.keys()) if (key.startsWith(tabId + ':')) frameCsp.delete(key);
   if (privateTabs.delete(tabId)) current.then(updateSessionRules).catch(() => {});
   api.storage.session.remove('tab:' + tabId).catch(() => {});
 });
