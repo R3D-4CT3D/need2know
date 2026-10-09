@@ -29,6 +29,26 @@
     d.gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl?.getParameter(gl.RENDERER) ?? null;
   } catch { /* no WebGL */ }
 
+  try {
+    const adapter = await timeout(navigator.gpu?.requestAdapter(), 1500);
+    d.webgpu = adapter ? [adapter.info.vendor, adapter.info.architecture].filter(Boolean).join(' ') || 'hidden' : 'not available';
+  } catch { d.webgpu = 'not available'; }
+
+  // Exact sizes of rotated text and emoji, the way layout fingerprinting measures them.
+  const box = document.createElement('div');
+  box.style.cssText = 'position:absolute;left:-9999px;top:0;font:13.37px sans-serif';
+  document.body.append(box);
+  const rects = [];
+  for (const [i, t] of ['😀', '🦊', 'Wy', 'fingerprint', '漢字', '👩‍💻'].entries()) {
+    const s = document.createElement('span');
+    s.textContent = t;
+    s.style.cssText = `display:inline-block;transform:rotate(${i * 7.3}deg) scale(1.0${i})`;
+    box.append(s);
+    for (const r of s.getClientRects()) rects.push(r.x, r.y, r.width, r.height);
+  }
+  box.remove();
+  d.rects = await hash(rects.join(','));
+
   d.cores = navigator.hardwareConcurrency ?? null;
   d.memory = navigator.deviceMemory ?? null;
   const voices = speechSynthesis?.getVoices() ?? [];

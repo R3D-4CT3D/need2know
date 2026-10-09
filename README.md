@@ -71,6 +71,8 @@ page 2. On **Protection test**, the canvas and audio values differ between `loca
 | Font probing | Text measured in ≥20 distinct fonts: canvas `measureText`, `document.fonts.check`, or sizing styled elements (`offsetWidth`/`offsetHeight`/`getBoundingClientRect`) | 20 |
 | Commercial fingerprinting service | Page contacts FingerprintJS / Fingerprint.com | 20 |
 | Graphics chip lookup | WebGL `UNMASKED_RENDERER_WEBGL` / `UNMASKED_VENDOR_WEBGL` | 15 |
+| WebGPU graphics lookup | Reading WebGPU's `GPUAdapterInfo` (vendor, architecture, device, description) | 10 |
+| Layout measurement probing | 30+ calls to `Element.getClientRects` or `Range` rects (sub-pixel text and emoji sizes) | 8 |
 | Hardware sweep | ≥10 distinct `navigator` / `screen` properties read | 10 |
 | Third-party keystroke listener | A script from another site adds a key or input listener to the whole page | 10 |
 | Fraud and bot detection | Page contacts ThreatMetrix, iovation, BioCatch, HUMAN, DataDome… | 10 |
@@ -111,7 +113,8 @@ Windows**. Settings shows whether it's allowed. Once it is:
 | Signal | Defense |
 |---|---|
 | Canvas, WebGL pixels, audio | **Noise.** Tiny changes, seeded per site and per browser session: one site always sees the same "you", two sites see different ones. |
-| GPU name, CPU cores, memory, battery, voices, device hints, keyboard layout, camera/mic count | **Generic values** many people share. |
+| GPU name (WebGL and WebGPU), CPU cores, memory, battery, voices, device hints, keyboard layout, camera/mic count | **Generic values** many people share. |
+| Layout measurements (`getClientRects`, `getBoundingClientRect`, `Range` rects) | **Noise of one 1/64 px step** on fractional values, seeded per site. Whole-pixel values stay exact. |
 | Session recorders, fingerprinting services (and optionally fraud/bot detection) | **Blocked** at the network level with `declarativeNetRequest`, from rules generated from `shared/vendors.js`. |
 | "Do not sell or share" | **Global Privacy Control:** `navigator.globalPrivacyControl` plus the `Sec-GPC: 1` header. |
 | WebRTC IP leaks | **Optional:** limits WebRTC to the default public interface. |
@@ -135,6 +138,11 @@ Design details worth knowing:
   compares it with the fallback. On canvas `measureText` and when sizing elements styled with an
   inline font-family, a family that isn't standard for your OS (and isn't a web font the page
   loaded) is dropped for that one measurement. Probes see a standard install; rendering never changes.
+- **Layout noise that can't be rounded away.** Chromium lays out in 1/64 px units, so a smaller
+  nudge (say ±0.001 px) could be undone by rounding to the nearest 1/64. Fractional values move by
+  one whole step instead (about 0.016 px), chosen by the seed and the value; whole-pixel values,
+  which ordinary layout code depends on, are never touched. A live check on 12 major sites showed no
+  breakage.
 - **Web Workers.** Content scripts can't run in workers, and a worker that answers differently from
   the page exposes the protection. So `hooks.js` starts each dedicated `Worker` from a `blob:` script
   that runs `worker-prelude.js` (detection, plus the page's protection with the same seed) and then
@@ -231,6 +239,11 @@ No data leaves your browser. Firefox's manifest declares `data_collection_permis
 - **Very early fingerprinting gets a random seed** for that page load (see *A secret seed* above).
   That's more private, but the site sees a different you on every reload.
 - **Fraud and bot detection isn't blocked by default** because banks and checkouts depend on it.
+- **WebGPU capability limits and subgroup sizes aren't generalized.** They vary by GPU, but WebGPU
+  programs rely on them; reporting false values could crash games and AI tools.
+- **Layout measurement detection skips `Element.getBoundingClientRect`,** which normal pages call
+  constantly; protection still adds noise to it. Measurements through `IntersectionObserver` and
+  `ResizeObserver` aren't covered.
 - **SharedWorker and ServiceWorker aren't covered,** and neither are dedicated workers on pages whose
   CSP forbids `blob:` workers (common on large sites). Wrapping those would change or break them. Content scripts can't run inside workers, so fingerprinting done
   with `OffscreenCanvas` in a worker goes unseen.

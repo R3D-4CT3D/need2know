@@ -5,7 +5,7 @@ export const DEFAULTS = Object.freeze({
   sites: {},                 // per-site overrides: { 'example.com': 'on' | 'off' }
   privateMode: 'follow',     // private windows: 'follow' the above, or 'always' protect
   pausedUntil: 0,            // protection paused until this time (ms); -1 = until browser restart
-  defenses: { canvas: true, audio: true, gpu: true, hardware: true, device: true, fonts: true },
+  defenses: { canvas: true, audio: true, gpu: true, hardware: true, device: true, fonts: true, rects: true },
   blockReplay: true,         // where protection is on: block session recorders
   blockFingerprinters: true, // ...fingerprinting services
   blockFraud: false,         // ...fraud and bot detection (can break logins and payments)
@@ -23,9 +23,10 @@ export const DEFAULTS = Object.freeze({
 export const DEFENSES = {
   canvas: { title: 'Canvas noise', detail: 'Hidden drawings and WebGL pixel reads come back slightly different on each site.' },
   audio: { title: 'Audio noise', detail: 'Silent test sounds measure slightly differently on each site.' },
-  gpu: { title: 'Generic graphics chip', detail: 'Sites see your GPU brand (e.g. "NVIDIA Graphics"), not the exact model.' },
+  gpu: { title: 'Generic graphics chip', detail: 'Sites see your GPU brand (e.g. "NVIDIA Graphics"), not the exact model, through WebGL and WebGPU.' },
   hardware: { title: 'Generic CPU and memory', detail: 'Processor cores and memory are rounded to common values.' },
   device: { title: 'Fewer device details', detail: 'Battery, speech voices, keyboard layout, camera and mic count, and exact OS version are hidden or generalized.' },
+  rects: { title: 'Layout measurement noise', detail: 'Exact text and element measurements change by a fraction of a pixel on each site. Whole-pixel sizes stay exact, so pages lay out normally.' },
   fonts: { title: 'Standard fonts only', detail: 'Font probes see only the fonts that come with your operating system, not ones you installed (like Office, Adobe or coding fonts). Pages still display with your real fonts.' },
 };
 

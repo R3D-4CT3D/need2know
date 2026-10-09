@@ -34,6 +34,14 @@ export const TECHNIQUES = {
     title: 'Graphics chip lookup', weight: 15, defense: 'generic', guard: 'gpu',
     why: () => 'Asked WebGL for your exact GPU model, one of the most identifying single values a site can get.',
   },
+  'webgpu': {
+    title: 'WebGPU graphics lookup', weight: 10, defense: 'generic', guard: 'gpu',
+    why: () => 'Asked WebGPU which graphics chip family you have, a newer route to the same information as WebGL.',
+  },
+  'rect-probe': {
+    title: 'Layout measurement probing', weight: 8, min: 30, defense: 'noise', guard: 'rects',
+    why: r => `Measured the exact size and position of text ${r.x} times. Sub-pixel differences in how your browser lays out text and emoji identify your setup. Normal for text editors.`,
+  },
   'hw-sweep': {
     title: 'Hardware sweep', weight: 10, min: 10, defense: 'partial', guard: 'hardware',
     why: r => `Read ${r.x} device and screen properties, such as processor cores, memory, plugins and screen size.`,

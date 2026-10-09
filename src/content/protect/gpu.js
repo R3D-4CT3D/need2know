@@ -1,10 +1,11 @@
-// Protection: generic graphics chip. Sites see the GPU brand, not the exact model.
+// Protection: generic graphics chip. Sites see the GPU brand, not the exact model, through both
+// WebGL and WebGPU.
 // Uses the helpers core.js shares; see core.js for how the files fit together.
 (() => {
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { P, adjust, enable } = k;
+  const { P, adjust, overrideGetter, enable } = k;
   enable('gpu');
 
   const VENDOR_BUCKETS = [
@@ -27,4 +28,8 @@
       return v;
     });
   }
+
+  // WebGPU's adapter info: keep the vendor (the brand), blank the chip family and model.
+  // Capability limits and subgroup sizes are left alone: WebGPU programs depend on them.
+  for (const name of ['architecture', 'device', 'description']) overrideGetter(P('GPUAdapterInfo'), name, () => '');
 })();

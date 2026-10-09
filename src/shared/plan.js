@@ -23,6 +23,7 @@ export const DEFENSE_FILES = {
   hardware: 'content/protect/hardware.js',
   device: 'content/protect/device.js',
   fonts: 'content/protect/fonts.js',
+  rects: 'content/protect/rects.js',
 };
 
 export function protectFiles(s) {

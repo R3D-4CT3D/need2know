@@ -30,15 +30,15 @@ test('default on, one site off: everyone else is protected', () => {
 test('protection runs before hooks.js: core first, then the enabled defenses', () => {
   const [main] = scriptPlan(settings({ protectDefault: true }));
   assert.deepEqual(main.js, ['content/gpc.js', 'content/protect/core.js', 'content/protect/canvas.js', 'content/protect/audio.js',
-    'content/protect/gpu.js', 'content/protect/hardware.js', 'content/protect/device.js', 'content/protect/fonts.js', 'content/hooks.js']);
+    'content/protect/gpu.js', 'content/protect/hardware.js', 'content/protect/device.js', 'content/protect/fonts.js', 'content/protect/rects.js', 'content/hooks.js']);
   assert.equal(main.world, 'MAIN');
   assert.equal(main.runAt, 'document_start');
 });
 
 test('only enabled defenses are injected', () => {
-  const files = protectFiles(settings({ defenses: { canvas: false, audio: false, device: false, fonts: false } }));
+  const files = protectFiles(settings({ defenses: { canvas: false, audio: false, device: false, fonts: false, rects: false } }));
   assert.deepEqual(files, ['content/protect/core.js', 'content/protect/gpu.js', 'content/protect/hardware.js']);
-  const none = { canvas: false, audio: false, gpu: false, hardware: false, device: false, fonts: false };
+  const none = { canvas: false, audio: false, gpu: false, hardware: false, device: false, fonts: false, rects: false };
   assert.deepEqual(protectFiles(settings({ defenses: none })), []);
   assert.deepEqual(scriptPlan(settings({ protectDefault: true, defenses: none })).map(p => p.id), ['wss-observe']);
 });

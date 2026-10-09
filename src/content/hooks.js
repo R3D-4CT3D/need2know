@@ -160,6 +160,18 @@
     });
   }
 
+  /* ---------- WebGPU: asking which graphics chip family you have ---------- */
+  for (const k of ['vendor', 'architecture', 'device', 'description']) wrapGetter(P('GPUAdapterInfo'), k, () => hit('webgpu'));
+
+  /* ---------- layout measurement: exact sizes of text and elements ---------- */
+  // getBoundingClientRect on elements is everywhere in normal layout code, so it isn't counted;
+  // the per-line and per-range variants fingerprinters use for text and emoji are.
+  let rectCalls = 0;
+  const sawRects = () => { if (rectCalls < 100000) hit('rect-probe', ++rectCalls); };
+  wrapMethod(P('Element'), 'getClientRects', sawRects);
+  wrapMethod(P('Range'), 'getClientRects', sawRects);
+  wrapMethod(P('Range'), 'getBoundingClientRect', sawRects);
+
   /* ---------- audio: rendering a silent sound offline ---------- */
   wrapMethod(P('OfflineAudioContext'), 'startRendering', () => hit('audio-fp'));
 

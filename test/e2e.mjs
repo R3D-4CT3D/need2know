@@ -56,7 +56,7 @@ try {
     executablePath: process.env.CHROME_PATH || undefined,
     headless: !process.env.HEADED,
     // static.hotjar.com -> the local test server, so a stand-in recorder can load for real.
-    args: [`--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--host-resolver-rules=MAP static.hotjar.com 127.0.0.1'],
+    args: [`--disable-extensions-except=${ext}`, `--load-extension=${ext}`, '--host-resolver-rules=MAP static.hotjar.com 127.0.0.1', '--enable-unsafe-webgpu'],
   });
   let [sw] = ctx.serviceWorkers();
   sw ??= await ctx.waitForEvent('serviceworker');
@@ -147,6 +147,13 @@ try {
     await Promise.all([page.close(), popup.page.close()]);
   }
 
+  console.log('\nWebGPU and layout measurement');
+  await setSettings({}, 'wss-observe');
+  const g0 = await visit(SITE + 'gpu-rects.html');
+  const G0 = g0.result ?? {};
+  check('baseline: WebGPU adapter available and layout values are sub-pixel', G0.webgpu?.architecture && G0.fractional > 20 && G0.exact, JSON.stringify(G0));
+  check('detected: WebGPU lookup and layout probing', statusOf(g0.report, 'webgpu') === 'active' && statusOf(g0.report, 'rect-probe') === 'active', g0.report.items.map(i => i.id).join(','));
+
   console.log('\nWeb Workers');
   await setSettings({}, 'wss-observe'); // back to defaults: protection off everywhere
   const countOf = (report, id) => report.items.find(i => i.id === id)?.count ?? 0;
@@ -184,6 +191,13 @@ try {
     const w2 = await visit(SITE + 'worker.html?csp=strict');
     const C = w2.result ?? {};
     check('strict CSP: workers aren\'t wrapped and keep working (not covered there)', !C.error && C.classic?.dep && C.classic?.canvas === W0.classic?.canvas && countOf(w2.report, 'canvas-fp') === 1 && !w2.errors.length, JSON.stringify(C).slice(0, 300));
+  }
+  {
+    const [g1, g2, g3] = [await visit(SITE + 'gpu-rects.html'), await visit(SITE + 'gpu-rects.html'), await visit(OTHER_SITE + 'gpu-rects.html')];
+    const [G1, G2, G3] = [g1.result ?? {}, g2.result ?? {}, g3.result ?? {}];
+    check('WebGPU: vendor kept, chip family hidden', G1.webgpu?.vendor === G0.webgpu?.vendor && G1.webgpu?.architecture === '' && statusOf(g1.report, 'webgpu') === 'neutralized', JSON.stringify(G1.webgpu));
+    check('layout: different per site, stable on one site', G1.rects !== G0.rects && G1.rects === G2.rects && G1.rects !== G3.rects && statusOf(g1.report, 'rect-probe') === 'neutralized', `${G0.rects} / ${G1.rects} / ${G2.rects} / ${G3.rects}`);
+    check('layout: whole-pixel sizes stay exact, no page errors', G1.exact === true && !g1.errors.length, JSON.stringify(G1) + g1.errors.join('; '));
   }
   check('popup statuses: canvas neutralized, GPU neutralized', statusOf(a1.report, 'canvas-fp') === 'neutralized' && statusOf(a1.report, 'webgl-gpu') === 'neutralized');
 

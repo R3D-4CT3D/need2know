@@ -90,6 +90,8 @@ const ROWS = [
   ['canvas', 'Canvas fingerprint', 'perSite'],
   ['audio', 'Audio fingerprint', 'perSite'],
   ['gpu', 'Graphics chip', 'generic'],
+  ['webgpu', 'WebGPU graphics info', 'generic'],
+  ['rects', 'Layout measurements', 'perSite'],
   ['cores', 'CPU cores', 'generic'],
   ['memory', 'Memory (GB)', 'generic'],
   ['voices', 'Speech voices', 'generic'],

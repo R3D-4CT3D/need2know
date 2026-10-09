@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>WebGPU and layout test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}pre{font-size:13px;white-space:pre-wrap}
+#exact{position:absolute;left:0;top:0;width:100px;height:50px;visibility:hidden}</style></head>
+<body>
+  <h1>WebGPU and layout test</h1>
+  <p>Reads WebGPU's adapter info and measures rotated text and emoji the way layout fingerprinting does. With protection on, the layout hash changes from site to site but stays the same on reload, whole-pixel sizes stay exact, and WebGPU shows only the vendor.</p>
+  <div id="exact"></div>
+  <pre id="out">Measuring…</pre>
+  <p id="status"></p>
+  <script>
+  addEventListener('load', async () => {
+    const hex = async s => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))].slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
+    const r = {};
+    // Layout fingerprint: 40 rotated, scaled spans of text and emoji, plus text ranges.
+    const box = document.createElement('div');
+    box.style.cssText = 'position:absolute;left:-9999px;top:0;font:13.37px sans-serif';
+    document.body.append(box);
+    const values = [];
+    const samples = ['😀', '🦊', 'Wy', 'fingerprint', '漢字', '👩‍💻', 'ﷺ', 'Ǆ'];
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('span');
+      s.textContent = samples[i % samples.length];
+      s.style.cssText = `display:inline-block;transform:rotate(${(i * 7.3) % 90}deg) scale(1.${i % 10})`;
+      box.append(s);
+      for (const rect of s.getClientRects()) values.push(rect.x, rect.y, rect.width, rect.height);
+      const range = document.createRange(); range.selectNodeContents(s);
+      const b = range.getBoundingClientRect(); values.push(b.width, b.height);
+    }
+    box.remove();
+    r.rects = await hex(values.join(','));
+    r.fractional = values.filter(v => !Number.isInteger(v)).length;
+    // Ordinary layout: whole-pixel sizes must come back exact.
+    const e = document.getElementById('exact').getBoundingClientRect();
+    r.exact = e.width === 100 && e.height === 50 && e.x === 0 && e.y === 0;
+    // WebGPU adapter info.
+    try {
+      const adapter = await navigator.gpu?.requestAdapter();
+      r.webgpu = adapter ? { vendor: adapter.info.vendor, architecture: adapter.info.architecture } : null;
+    } catch (err) { r.webgpu = 'error ' + err.message; }
+    document.getElementById('out').textContent = JSON.stringify(r, null, 2);
+    const st = document.getElementById('status'); st.dataset.result = JSON.stringify(r); st.dataset.done = '1'; st.textContent = 'done';
+  });
+  </script>
+</body>
+</html>

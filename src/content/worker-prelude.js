@@ -195,6 +195,9 @@
       });
     }
   }
+  if (has('gpu')) {
+    for (const name of ['architecture', 'device', 'description']) adjustGetter(P('GPUAdapterInfo'), name, () => '');
+  }
   if (has('hardware')) {
     adjustGetter(P('WorkerNavigator'), 'hardwareConcurrency', v => typeof v === 'number' ? (v <= 4 ? 4 : 8) : v);
     adjustGetter(P('WorkerNavigator'), 'deviceMemory', v => typeof v === 'number' ? (v >= 4 ? 8 : 4) : v);
@@ -254,6 +257,7 @@
   for (const name of ['WebGLRenderingContext', 'WebGL2RenderingContext']) {
     spy(P(name), 'getParameter', (_, [p]) => { if (p === 0x9245 || p === 0x9246) hit('webgl-gpu'); });
   }
+  for (const k of ['vendor', 'architecture', 'device', 'description']) spyGetter(P('GPUAdapterInfo'), k, () => hit('webgpu'));
   const props = new Set();
   for (const k of ['hardwareConcurrency', 'deviceMemory', 'platform', 'languages', 'userAgent', 'connection']) {
     spyGetter(P('WorkerNavigator'), k, () => { if (!props.has(k)) { props.add(k); hit('hw-sweep', props.size); } });
