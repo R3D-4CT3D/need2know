@@ -12,7 +12,8 @@ const MULTI_PART = new Set([
 ]);
 
 export function hostOf(url) {
-  try { return new URL(url).hostname.toLowerCase(); } catch { return ''; }
+  // blob:https://site/uuid belongs to the site that created it
+  try { return new URL(String(url).replace(/^blob:/, '')).hostname.toLowerCase(); } catch { return ''; }
 }
 
 export function siteOf(host) {

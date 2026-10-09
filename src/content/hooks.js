@@ -20,8 +20,15 @@
   const dispatch = EventTarget.prototype.dispatchEvent;
   const listen = EventTarget.prototype.addEventListener;
   const exec = RegExp.prototype.exec;
-  const later = setTimeout.bind(W);
-  const doc = document;
+
+  // Report through the highest same-origin ancestor. Fingerprinters (FingerprintJS included)
+  // create an iframe, probe inside it, and delete it within milliseconds, which kills any timer
+  // still pending inside it. The ancestor's document and timers outlive the iframe.
+  // Climbing stops at the first cross-origin parent, because reading its .document throws.
+  let host = W;
+  try { while (host !== host.parent && host.parent.document) host = host.parent; } catch (_) { /* cross-origin */ }
+  const doc = host.document;
+  const later = host.setTimeout.bind(host);
 
   /* ---------- who called? ---------- */
   // Matches the first http(s)/file/blob URL in a stack trace. Our own frames are
@@ -126,6 +133,17 @@
   wrapMethod(P('OffscreenCanvas'), 'convertToBlob', readback);
   wrapMethod(P('FontFaceSet'), 'check', (_, [font]) => sawFont(font));
 
+  // The DOM version of the same trick, used by FingerprintJS: give hidden <span>s different
+  // inline font-family values and compare their sizes. These getters are hot on every page, so
+  // the check is one inline-style read, and only explicitly styled elements count.
+  const sawElementFont = el => {
+    const ff = el && el.style && el.style.fontFamily;
+    if (ff) sawFont('dom:' + ff);
+  };
+  wrapGetter(P('HTMLElement'), 'offsetWidth', sawElementFont);
+  wrapGetter(P('HTMLElement'), 'offsetHeight', sawElementFont);
+  wrapMethod(P('Element'), 'getBoundingClientRect', sawElementFont);
+
   /* ---------- WebGL: asking for the real GPU name ---------- */
   const UNMASKED_VENDOR = 0x9245, UNMASKED_RENDERER = 0x9246;
   for (const name of ['WebGLRenderingContext', 'WebGL2RenderingContext']) {
@@ -163,6 +181,7 @@
   const KEY_EVENTS = new Set(['keydown', 'keyup', 'keypress', 'input']);
   wrapMethod(P('EventTarget'), 'addEventListener', (target, [type]) => {
     if (!KEY_EVENTS.has(type)) return;
-    if (target === W || target === doc || target === doc.documentElement || target === doc.body) hit('key-listen');
+    const d = W.document;
+    if (target === W || target === d || target === d.documentElement || target === d.body) hit('key-listen');
   });
 })();

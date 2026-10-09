@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Escape tests</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}li{margin-bottom:6px}</style></head>
+<body>
+  <h1>Escape tests</h1>
+  <p>Each variant tries to fingerprint you in a way that dodges simple API hooks. The extension should catch every one.</p>
+  <ul>
+    <li><a href="?v=iframe">iframe</a>: canvas fingerprint using a fresh <code>about:blank</code> iframe's untouched APIs, reached via <code>contentWindow</code></li>
+    <li><a href="?v=frames">frames</a>: the same, but reached via <code>window.frames[i]</code></li>
+    <li><a href="?v=srcdoc">srcdoc</a>: the same, inside a <code>srcdoc</code> iframe after it loads</li>
+    <li><a href="?v=dom-fonts">dom-fonts</a>: font probing by measuring hidden <code>&lt;span&gt;</code> elements instead of a canvas</li>
+    <li><a href="?v=blob">blob</a>: a <code>blob:</code> iframe that runs its own fingerprinting script</li>
+    <li><a href="?v=data">data</a>: a <code>data:</code> iframe that runs its own fingerprinting script</li>
+    <li><a href="?v=fingerprintjs">fingerprintjs</a>: the real open-source FingerprintJS library</li>
+  </ul>
+  <p id="status"></p>
+  <script src="http://127.0.0.1:8081/escape.js"></script>
+</body>
+</html>

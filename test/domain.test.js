@@ -23,6 +23,7 @@ test('isThirdParty compares sites, not hosts', () => {
 test('hostOf tolerates junk', () => {
   assert.equal(hostOf('https://A.example.com/x'), 'a.example.com');
   assert.equal(hostOf('not a url'), '');
+  assert.equal(hostOf('blob:https://news.example.com/6f1c2d0e'), 'news.example.com');
 });
 
 test('matchVendor matches subdomains but not lookalikes', () => {
