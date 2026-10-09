@@ -1,7 +1,7 @@
 import { api } from '../shared/api.js';
 import { buildReport, GRADES } from '../shared/scoring.js';
 import { siteOf } from '../shared/domain.js';
-import { loadSettings, siteMode } from '../shared/settings.js';
+import { loadSettings, siteMode, isPaused } from '../shared/settings.js';
 import { adviceFor, browserTip, detectBrowser } from '../shared/guides.js';
 
 const $ = id => document.getElementById(id);
@@ -47,19 +47,33 @@ if (!(await api.permissions.contains(ALL).catch(() => true))) {
 // The switch shows the setting for this site; the line under it says if the page that's
 // actually loaded differs (e.g. it was open before the setting changed).
 let pageProtected = null; // what the loaded page reported, once we know
+const privateAlways = () => tab?.incognito && settings.privateMode === 'always';
+// What this page should get right now, all settings considered.
+const effectiveOn = () => !isPaused(settings) && (siteMode(settings, site).on || privateAlways());
 function renderShield() {
   $('shield').hidden = !webPage;
-  const { on, custom } = siteMode(settings, site);
-  $('protect-site').checked = on;
-  $('shield-label').textContent = on ? 'Protection on' : 'Protection off';
+  const { on: siteOn, custom } = siteMode(settings, site);
+  const paused = isPaused(settings);
+  const on = effectiveOn();
+  $('protect-site').checked = siteOn || privateAlways();
+  $('protect-site').disabled = paused || (privateAlways() && !siteOn);
+  $('shield-label').textContent = paused ? 'Protection paused' : on ? 'Protection on' : 'Protection off';
   const mode = $('shield-mode');
-  if (custom) {
+  if (paused) {
+    mode.replaceChildren();
+  } else if (privateAlways() && !siteOn) {
+    mode.replaceChildren('Always on in private windows');
+  } else if (custom) {
     const reset = el('button', { text: 'use default' });
     reset.addEventListener('click', () => setSite(settings.protectDefault));
     mode.replaceChildren('Set for this site · ', reset);
   } else {
     mode.replaceChildren(`Your default for all sites`);
   }
+  const until = settings.pausedUntil;
+  $('pause-text').textContent = !paused ? '' : until === -1 ? 'Paused until you restart the browser.'
+    : `Paused until ${new Date(until).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.`;
+  for (const b of document.querySelectorAll('[data-pause]')) b.hidden = (b.dataset.pause === '0') !== paused;
   const mismatch = pageProtected !== null && pageProtected !== on;
   $('mismatch').hidden = !mismatch;
   $('mismatch-text').textContent = on
@@ -78,6 +92,16 @@ async function setSite(on) {
   refresh();
 }
 $('protect-site').addEventListener('change', e => setSite(e.target.checked));
+for (const b of document.querySelectorAll('[data-pause]')) {
+  b.addEventListener('click', async () => {
+    $('shield').classList.add('busy');
+    await api.runtime.sendMessage({ type: 'pause', minutes: Number(b.dataset.pause), tabId: tab.id });
+    settings = await loadSettings(api);
+    pageProtected = null;
+    $('shield').classList.remove('busy');
+    renderShield();
+  });
+}
 $('reload').addEventListener('click', () => { api.tabs.reload(tab.id); pageProtected = null; renderShield(); });
 renderShield();
 
@@ -86,7 +110,7 @@ function render(state) {
   const r = buildReport(state ?? { url: tab?.url ?? '' });
   if (state && webPage) {
     // With every defense switched off there's nothing to inject, so no mismatch to report.
-    pageProtected = Object.values(settings.defenses).some(Boolean) ? r.protect : siteMode(settings, site).on;
+    pageProtected = Object.values(settings.defenses).some(Boolean) ? r.protect : effectiveOn();
     renderShield();
   }
   const g = GRADES[r.grade];
@@ -102,7 +126,7 @@ function render(state) {
     : 'Watching. Some scripts wait until you scroll, type or click.';
 
   // What still needs attention first; fully stopped techniques collapse to one line each.
-  const context = { settings, siteOn: siteMode(settings, site).on };
+  const context = { settings, siteOn: effectiveOn() };
   const rank = { active: 0, partial: 1, neutralized: 2, blocked: 2 };
   const ordered = [...r.items].sort((a, b) => rank[a.status] - rank[b.status]);
   $('items').replaceChildren(...ordered.map(item => {

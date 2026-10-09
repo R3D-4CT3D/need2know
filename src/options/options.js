@@ -1,5 +1,6 @@
 import { api } from '../shared/api.js';
-import { loadSettings, saveSettings, DEFAULTS, DEFENSES } from '../shared/settings.js';
+import { loadSettings, saveSettings, normalize, DEFAULTS, DEFENSES } from '../shared/settings.js';
+import { detectBrowser } from '../shared/guides.js';
 import { VENDORS } from '../shared/vendors.js';
 import { siteOf } from '../shared/domain.js';
 
@@ -51,6 +52,12 @@ function render() {
   const n = settings.allowedVendors.length;
   $('vendors-sum').textContent = `Companies you always allow (${n ? n : 'none'})`;
 
+  $('exclude').replaceChildren(...(settings.historyExclude.length ? settings.historyExclude.map(site => {
+    const remove = el('button', { text: 'Record again' });
+    remove.addEventListener('click', () => save({ historyExclude: settings.historyExclude.filter(s => s !== site) }));
+    return el('li', {}, site, remove);
+  }) : [el('li', { class: 'none', text: 'None.' })]));
+
   const entries = Object.entries(settings.sites).sort(([a], [b]) => a.localeCompare(b));
   $('sites').replaceChildren(...(entries.length ? entries.map(([site, mode]) => {
     const select = el('select', { 'aria-label': `Protection for ${site}` },
@@ -87,15 +94,49 @@ for (const box of document.querySelectorAll('input[data-vendor]')) {
   });
 }
 
-$('add').addEventListener('submit', e => {
-  e.preventDefault();
-  const raw = $('add-site').value.trim().toLowerCase();
+// Accepts "example.com", "www.example.com" or a full URL; returns the site, or null.
+function siteFromInput(input) {
+  const raw = input.value.trim().toLowerCase();
   let host = raw;
   try { host = new URL(/^[a-z]+:\/\//.test(raw) ? raw : `https://${raw}`).hostname; } catch { /* keep raw */ }
   const site = siteOf(host);
-  if (!site || !/^[a-z0-9.-]+$/.test(site)) { notice('That doesn\'t look like a website address.'); return; }
-  $('add-site').value = '';
-  save({ sites: { ...settings.sites, [site]: $('add-mode').value } }, `Added ${site}.`);
+  if (!site || !/^[a-z0-9.-]+$/.test(site)) { notice('That doesn\'t look like a website address.'); return null; }
+  input.value = '';
+  return site;
+}
+$('add').addEventListener('submit', e => {
+  e.preventDefault();
+  const site = siteFromInput($('add-site'));
+  if (site) save({ sites: { ...settings.sites, [site]: $('add-mode').value } }, `Added ${site}.`);
+});
+$('add-exclude').addEventListener('submit', async e => {
+  e.preventDefault();
+  const site = siteFromInput($('exclude-site'));
+  if (!site) return;
+  await forgetSite(site);
+  save({ historyExclude: [...new Set([...settings.historyExclude, site])] }, `${site} won't be recorded, and its history is deleted.`);
+});
+async function forgetSite(site) {
+  const { history = {} } = await api.storage.local.get('history');
+  for (const host of Object.keys(history)) if (siteOf(host) === site) delete history[host];
+  await api.storage.local.set({ history });
+}
+
+/* ---------- private windows: does the browser let us run there? ---------- */
+const HOW = {
+  firefox: 'Open about:addons, click What Sites See, and set "Run in Private Windows" to Allow.',
+  chrome: 'Open chrome://extensions, click Details on What Sites See, and turn on "Allow in Incognito".',
+  edge: 'Open edge://extensions, click Details on What Sites See, and turn on "Allow in InPrivate".',
+  brave: 'Open brave://extensions, click Details on What Sites See, and turn on "Allow in Private".',
+  opera: 'Open opera://extensions, find What Sites See, and turn on its private-window option.',
+  vivaldi: 'Open vivaldi://extensions, click Details on What Sites See, and turn on its private-window option.',
+};
+Promise.all([api.extension.isAllowedIncognitoAccess(), detectBrowser()]).then(([allowed, browser]) => {
+  const p = $('incognito-access');
+  p.className = `access ${allowed ? 'ok' : 'no'}`;
+  p.textContent = allowed
+    ? 'Your browser lets this extension run in private windows. Private windows are never recorded in history.'
+    : `Your browser doesn't let this extension run in private windows yet, so nothing below applies there. ${HOW[browser] ?? HOW.chrome} Browsers don't allow extensions to change this themselves.`;
 });
 
 /* ---------- your data ---------- */
@@ -105,6 +146,21 @@ $('export').addEventListener('click', async () => {
   const a = el('a', { href: URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })), download: 'what-sites-see-data.json' });
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$('import').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  try {
+    const data = JSON.parse(await file.text());
+    // Accepts this page's export (settings inside) or a bare settings object.
+    const incoming = normalize(data.settings ?? data);
+    settings = await saveSettings(api, incoming);
+    render();
+    notice('Settings imported. History in the file was not imported.');
+  } catch {
+    notice('That file isn\'t a What Sites See export.');
+  }
 });
 $('clear-history').addEventListener('click', async () => {
   if (!confirm('Delete the record of every site this extension has seen? Your settings stay.')) return;

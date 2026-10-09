@@ -5,13 +5,15 @@
 import { api } from './shared/api.js';
 import { buildReport, GRADES } from './shared/scoring.js';
 import { hostOf, siteOf } from './shared/domain.js';
-import { loadSettings, saveSettings, withSite } from './shared/settings.js';
+import { loadSettings, saveSettings, withSite, isPaused } from './shared/settings.js';
 import { VENDORS } from './shared/vendors.js';
-import { scriptPlan, rulesetPlan, dynamicRules, DYNAMIC_RULE_BASE } from './shared/plan.js';
+import { scriptPlan, rulesetPlan, dynamicRules, sessionRules, DYNAMIC_RULE_BASE, SESSION_RULE_BASE } from './shared/plan.js';
 
 const HISTORY_LIMIT = 500;
 const tabs = new Map();    // tabId -> { url, doc, incognito, frames: { frameId: {...} } }
 const pending = new Map(); // tabId -> timer
+// Settings are read often (every page, every badge), so keep a copy in memory.
+let current = loadSettings(api);
 
 const ready = api.storage.session.get(null).then(all => {
   for (const [key, value] of Object.entries(all)) {
@@ -40,7 +42,35 @@ async function updateNetworkRules(settings) {
     removeRuleIds: old.filter(r => r.id >= DYNAMIC_RULE_BASE).map(r => r.id),
     addRules: dynamicRules(settings),
   });
+  await updateSessionRules(settings);
 }
+
+// Session rules name tabs, so they're rebuilt whenever a private tab opens or closes.
+// Browsers clear them on restart, and the background rebuilds them on startup.
+const privateTabs = new Set();
+async function updateSessionRules(settings) {
+  const old = await api.declarativeNetRequest.getSessionRules();
+  await api.declarativeNetRequest.updateSessionRules({
+    removeRuleIds: old.filter(r => r.id >= SESSION_RULE_BASE).map(r => r.id),
+    addRules: sessionRules(settings, [...privateTabs]),
+  });
+}
+api.tabs.query({}).then(all => {
+  for (const t of all) if (t.incognito) privateTabs.add(t.id);
+  return current.then(updateSessionRules);
+}).catch(() => {});
+api.tabs.onCreated.addListener(t => {
+  if (!t.incognito) return;
+  privateTabs.add(t.id);
+  current.then(s => s.privateMode === 'always' && updateSessionRules(s)).catch(() => {});
+});
+
+// Pausing: an alarm turns protection back on; "until restart" is cleared at startup.
+async function updatePause(settings) {
+  await api.alarms.clear('resume');
+  if (settings.pausedUntil > Date.now()) api.alarms.create('resume', { when: settings.pausedUntil });
+}
+api.alarms.onAlarm.addListener(a => { if (a.name === 'resume') saveSettings(api, { pausedUntil: 0 }); });
 
 // Keep WebRTC on the default public interface: video calls work, but a page can't discover
 // your other network addresses, such as your real IP behind a VPN.
@@ -51,8 +81,6 @@ async function updateWebRTC(settings) {
   else await policy.clear({});
 }
 
-// Settings are read often (every page, every badge), so keep a copy in memory.
-let current = loadSettings(api);
 let applying = Promise.resolve();
 function applySettings() {
   applying = applying.then(async () => {
@@ -62,6 +90,7 @@ function applySettings() {
       registerScripts(settings),
       updateNetworkRules(settings),
       updateWebRTC(settings).catch(() => {}),
+      updatePause(settings).catch(() => {}),
     ]);
   }).catch(e => console.error('What Sites See: applying settings failed', e));
   return applying;
@@ -72,10 +101,17 @@ api.runtime.onInstalled.addListener(({ reason }) => {
   // First install: open the Checkup so people see what's on and what's left to do.
   if (reason === 'install') api.tabs.create({ url: api.runtime.getURL('checkup/checkup.html') });
 });
-// Chrome keeps registered scripts across restarts; re-register only if they're missing.
+// On browser start: end an "until restart" pause, and rebuild what browsers don't keep
+// (session rules always; registered scripts in browsers that don't persist them).
 api.runtime.onStartup.addListener(async () => {
+  const settings = await current;
+  if (settings.pausedUntil === -1 || (settings.pausedUntil && !isPaused(settings))) {
+    await saveSettings(api, { pausedUntil: 0 }); // storage.onChanged re-applies everything
+    return;
+  }
   const registered = await api.scripting.getRegisteredContentScripts().catch(() => []);
   if (!registered.length) applySettings();
+  else updateSessionRules(settings).catch(() => {});
 });
 api.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.settings) applySettings();
@@ -101,7 +137,9 @@ async function seedFor(sender) {
     }
   }
   const topUrl = sender.frameId === 0 ? sender.url : (sender.tab?.url || sender.url);
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(secret + '|' + siteOf(hostOf(topUrl))));
+  // Private windows get their own seeds, so a site can't match a private visit to a normal one.
+  const mode = sender.tab?.incognito ? 'private' : 'normal';
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${secret}|${mode}|${siteOf(hostOf(topUrl))}`));
   return new DataView(digest).getUint32(0);
 }
 
@@ -112,6 +150,15 @@ api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'seed') {
     seedFor(sender).then(sendResponse, () => sendResponse(null));
     return true; // keep the channel open for the async reply
+  }
+  if (msg.type === 'pause') {
+    // From the popup: 0 resumes, -1 pauses until restart, otherwise a duration in minutes.
+    const until = msg.minutes === 0 ? 0 : msg.minutes === -1 ? -1 : Date.now() + Number(msg.minutes) * 60000;
+    saveSettings(api, { pausedUntil: until })
+      .then(() => applySettings())
+      .then(() => Number.isInteger(msg.tabId) && api.tabs.reload(msg.tabId))
+      .then(() => sendResponse(true), () => sendResponse(false));
+    return true;
   }
   if (msg.type === 'set-site' && typeof msg.site === 'string') {
     // From the popup. Reloading only after the new scripts and rules are registered avoids a
@@ -136,6 +183,7 @@ api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 api.tabs.onRemoved.addListener(tabId => {
   tabs.delete(tabId);
+  if (privateTabs.delete(tabId)) current.then(updateSessionRules).catch(() => {});
   api.storage.session.remove('tab:' + tabId).catch(() => {});
 });
 
@@ -216,6 +264,7 @@ async function paintBadge(tabId, r, settings) {
 let historyChain = Promise.resolve();
 function remember(st, report, settings) {
   if (!settings.history || st.incognito || report.score === 0 || !/^https?:/.test(st.url)) return;
+  if (settings.historyExclude.includes(siteOf(report.host))) return;
   historyChain = historyChain.then(async () => {
     const { history = {} } = await api.storage.local.get('history');
     const prev = history[report.host];

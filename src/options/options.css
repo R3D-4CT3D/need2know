@@ -26,5 +26,13 @@ h3 { font-size: 1rem; margin: 18px 0 2px; color: var(--muted); font-weight: 700;
 .add input { flex: 1; min-width: 160px; width: auto; }
 .data { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 6px; }
 .btn.danger { border-color: var(--stamp); color: var(--stamp); }
+.btn.file { cursor: pointer; }
+.access { margin: 4px 0 4px; padding: 8px 12px; border-radius: 5px; font-size: 14px; max-width: 70ch; }
+.access.ok { background: var(--paper); border-left: 3px solid var(--ok); }
+.access.no { background: var(--paper); border-left: 3px solid var(--stamp); }
+.exclude { list-style: none; padding: 0; margin: 4px 0 0; max-width: 620px; }
+.exclude li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--line); font: 14px var(--mono); }
+.exclude li.none { font-family: inherit; color: var(--muted); }
+.exclude button { background: none; border: 0; color: var(--stamp); font-weight: 700; padding: 0; font-size: 13px; font-family: var(--serif); }
 .saved { position: fixed; right: 16px; bottom: 16px; margin: 0; max-width: calc(100% - 32px); padding: 10px 14px; border-radius: 6px;
   background: var(--ink); color: var(--bg); font-size: 14px; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,.2); }

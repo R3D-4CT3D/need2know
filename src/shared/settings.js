@@ -3,6 +3,8 @@
 export const DEFAULTS = Object.freeze({
   protectDefault: false,     // protection for sites without their own setting
   sites: {},                 // per-site overrides: { 'example.com': 'on' | 'off' }
+  privateMode: 'follow',     // private windows: 'follow' the above, or 'always' protect
+  pausedUntil: 0,            // protection paused until this time (ms); -1 = until browser restart
   defenses: { canvas: true, audio: true, gpu: true, hardware: true, device: true },
   blockReplay: true,         // where protection is on: block session recorders
   blockFingerprinters: true, // ...fingerprinting services
@@ -14,6 +16,7 @@ export const DEFAULTS = Object.freeze({
   badge: 'score',            // toolbar badge: 'score' or 'none'
   history: true,             // remember sites that fingerprinted you
   historyDays: 90,           // forget sites not seen for this long (0 = keep forever)
+  historyExclude: [],        // sites never recorded in history
 });
 
 // What each defense covers, for the Settings page and the advice text.
@@ -31,6 +34,9 @@ export async function loadSettings(api) {
 }
 
 export function normalize(stored = {}) {
+  // Only known keys survive, so an imported file can't add anything unexpected.
+  const known = Object.fromEntries(Object.entries(stored ?? {}).filter(([k]) => k in DEFAULTS || k === 'allowlist'));
+  stored = known;
   const s = { ...DEFAULTS, ...stored };
   s.sites = { ...stored.sites };
   // v0.2 development builds kept an "allowlist" of sites with protection off.
@@ -39,6 +45,7 @@ export function normalize(stored = {}) {
   delete s.protect;
   s.defenses = { ...DEFAULTS.defenses, ...stored.defenses };
   s.allowedVendors = [...(stored.allowedVendors ?? [])];
+  s.historyExclude = [...(stored.historyExclude ?? [])];
   return s;
 }
 
@@ -53,6 +60,8 @@ export function siteMode(settings, site) {
   const custom = settings.sites[site] ?? null;
   return { on: custom ? custom === 'on' : settings.protectDefault, custom };
 }
+
+export const isPaused = (s, now = Date.now()) => s.pausedUntil === -1 || s.pausedUntil > now;
 
 // Set a site to on or off; matching the default removes the override.
 export function withSite(settings, site, on) {

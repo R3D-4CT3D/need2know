@@ -1,6 +1,7 @@
 // Turns settings into the browser configuration background.js applies: which content scripts
 // run where, and which network rules are on. Pure functions, so they're unit tested.
 import { VENDORS } from './vendors.js';
+import { isPaused } from './settings.js';
 
 const isIp = site => /^[\d.]+$/.test(site) || site.includes(':');
 
@@ -30,18 +31,24 @@ export function protectFiles(s) {
 
 // Scripts in the page's world. Order inside `js` matters: protection runs before hooks.js so
 // it wraps the native APIs first, and hooks.js still observes every call.
-export function scriptPlan(s) {
+// With privateMode 'always', unprotected sites get the protection files behind
+// private-only.js: the wrappers stay inert unless the bridge confirms a private window.
+export function scriptPlan(s, now = Date.now()) {
   const gpc = s.gpc ? ['content/gpc.js'] : [];
   const base = { matches: ['<all_urls>'], runAt: 'document_start', allFrames: true, world: 'MAIN' };
-  const observe = [...gpc, 'content/hooks.js'];
-  const protect = [...gpc, ...protectFiles(s), 'content/hooks.js'];
-  if (protect.length === observe.length) return [{ ...base, id: 'wss-observe', js: observe }];
+  const files = protectFiles(s);
+  const plain = [...gpc, 'content/hooks.js'];
+  const protect = [...gpc, ...files, 'content/hooks.js'];
+  if (!files.length || isPaused(s, now)) return [{ ...base, id: 'wss-observe', js: plain }];
+  const privateOnly = s.privateMode === 'always';
+  const observe = privateOnly ? [...gpc, 'content/protect/private-only.js', ...files, 'content/hooks.js'] : plain;
+  const observeId = privateOnly ? 'wss-private' : 'wss-observe';
 
   // The default applies everywhere except the sites set the other way.
   const exceptions = sitesSetTo(s, s.protectDefault ? 'off' : 'on').flatMap(sitePatterns);
   const [byDefault, byException] = s.protectDefault ? [protect, observe] : [observe, protect];
-  const plan = [{ ...base, id: s.protectDefault ? 'wss-protect' : 'wss-observe', js: byDefault, ...(exceptions.length ? { excludeMatches: exceptions } : {}) }];
-  if (exceptions.length) plan.push({ ...base, id: s.protectDefault ? 'wss-observe' : 'wss-protect', js: byException, matches: exceptions });
+  const plan = [{ ...base, id: s.protectDefault ? 'wss-protect' : observeId, js: byDefault, ...(exceptions.length ? { excludeMatches: exceptions } : {}) }];
+  if (exceptions.length) plan.push({ ...base, id: s.protectDefault ? observeId : 'wss-protect', js: byException, matches: exceptions });
   return plan;
 }
 
@@ -76,27 +83,33 @@ export function rulesetPlan(s) {
   return { enableRulesetIds: ids.filter(id => on[id]), disableRulesetIds: ids.filter(id => !on[id]) };
 }
 
-// Blocking only happens on pages where protection is on. allowAllRequests on a page's main
-// frame exempts everything that page loads, iframes included. Companies the user allowed are
-// never blocked anywhere.
+// Companies the user allowed are never blocked anywhere.
 export const DYNAMIC_RULE_BASE = 1000;
 export function dynamicRules(s) {
-  const rules = [];
-  const allowPages = condition => rules.push({
-    id: DYNAMIC_RULE_BASE + rules.length, priority: 100,
+  const allowed = VENDORS.filter(v => s.allowedVendors.includes(v.name)).flatMap(v => v.domains);
+  return allowed.length
+    ? [{ id: DYNAMIC_RULE_BASE, priority: 50, action: { type: 'allow' }, condition: { requestDomains: allowed } }]
+    : [];
+}
+
+// Blocking only happens on pages where protection is on: allowAllRequests on a page's main
+// frame exempts everything that page loads, iframes included. These are session rules because
+// only session rules can name tabs, which is how private windows stay protected
+// (privateTabIds = the open private tabs) when privateMode is 'always'.
+export const SESSION_RULE_BASE = 2000;
+export function sessionRules(s, privateTabIds = [], now = Date.now()) {
+  const paused = isPaused(s, now);
+  const keepPrivate = !paused && s.privateMode === 'always' && privateTabIds.length ? { excludedTabIds: [...privateTabIds].sort((a, b) => a - b) } : {};
+  const exempt = condition => [{
+    id: SESSION_RULE_BASE, priority: 100,
     action: { type: 'allowAllRequests' },
-    condition: { resourceTypes: ['main_frame'], ...condition },
-  });
+    condition: { resourceTypes: ['main_frame'], ...condition, ...keepPrivate },
+  }];
+  if (paused) return exempt({});
   if (s.protectDefault) {
     const off = sitesSetTo(s, 'off');
-    if (off.length) allowPages({ requestDomains: off });
-  } else {
-    const on = sitesSetTo(s, 'on');
-    allowPages(on.length ? { excludedRequestDomains: on } : {});
+    return off.length ? exempt({ requestDomains: off }) : [];
   }
-  const allowed = VENDORS.filter(v => s.allowedVendors.includes(v.name)).flatMap(v => v.domains);
-  if (allowed.length) {
-    rules.push({ id: DYNAMIC_RULE_BASE + rules.length, priority: 50, action: { type: 'allow' }, condition: { requestDomains: allowed } });
-  }
-  return rules;
+  const on = sitesSetTo(s, 'on');
+  return exempt(on.length ? { excludedRequestDomains: on } : {});
 }

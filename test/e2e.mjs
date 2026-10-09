@@ -194,6 +194,48 @@ try {
     await page.close();
   }
 
+  console.log('\nMore controls');
+  await setSettings({ privateMode: 'always' }, 'wss-private');
+  {
+    const p = await visit(SITE + 'protect.html');
+    check('"always protect private windows": normal windows still get real values', p.result?.canvas === raw.result?.canvas && p.result?.gpu === raw.result?.gpu && !p.errors.length && statusOf(p.report, 'canvas-fp') === 'active', `${p.result?.gpu}; ${p.errors.join('; ')}`);
+  }
+  await setSettings({ protectDefault: true, pausedUntil: Date.now() + 3600000 }, 'wss-observe');
+  {
+    const page = await ctx.newPage();
+    await page.goto(SITE + 'protect.html');
+    await page.waitForSelector('#status[data-done]');
+    const pausedGpu = JSON.parse(await page.getAttribute('#status', 'data-result')).gpu;
+    const tabId = await sw.evaluate(async u => (await chrome.tabs.query({ url: u }))[0].id, SITE + 'protect.html');
+    const popup = await extPage(`popup/popup.html?tab=${tabId}`, '#shield:not([hidden])');
+    const label = await popup.page.textContent('#shield-label');
+    await popup.page.click('[data-pause="0"]');
+    await page.waitForTimeout(2500);
+    await page.waitForSelector('#status[data-done]');
+    const resumedGpu = JSON.parse(await page.getAttribute('#status', 'data-result')).gpu;
+    check('paused: real values; "Resume protection" in the popup brings protection back', label === 'Protection paused' && pausedGpu === raw.result?.gpu && / Graphics/.test(resumedGpu ?? ''), `${label}: ${pausedGpu} → ${resumedGpu}`);
+    await Promise.all([page.close(), popup.page.close()]);
+  }
+  await sw.evaluate(async () => {
+    const { history = {} } = await chrome.storage.local.get('history');
+    delete history.localhost;
+    await chrome.storage.local.set({ history });
+  });
+  await setSettings({ historyExclude: ['localhost'] }, 'wss-observe');
+  {
+    await visit(SITE + 'fingerprinter.html');
+    const hist = await sw.evaluate(async () => Object.keys((await chrome.storage.local.get('history')).history ?? {}));
+    check('a never-recorded site stays out of history', !hist.includes('localhost'), JSON.stringify(hist));
+  }
+  {
+    const { page, errors } = await extPage('options/options.html', '#defenses input');
+    await page.setInputFiles('#import', { name: 'settings.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ settings: { protectDefault: true, badge: 'none', evil: 1 } })) });
+    await page.waitForTimeout(800);
+    const s = await sw.evaluate(async () => (await chrome.storage.local.get('settings')).settings);
+    check('import settings: applied, unknown keys dropped', s.protectDefault === true && s.badge === 'none' && !('evil' in s) && !errors.length, JSON.stringify(s));
+    await page.close();
+  }
+
   console.log('\nTyping warning');
   await setSettings({}, 'wss-observe');
   {

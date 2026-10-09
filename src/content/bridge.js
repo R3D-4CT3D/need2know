@@ -30,13 +30,22 @@
   /* ---------- seed handoff to protect/core.js ---------- */
   // core.js invents a private event name and announces it on "wss:hello". We cancel the
   // event to confirm receipt, then deliver the seed under that name once the background replies.
+  // Only this isolated world can tell a private window apart (extension.inIncognitoContext),
+  // so it answers immediately whether private-window-only protection should switch on.
+  let greeted = false;
   document.addEventListener('wss:hello', e => {
-    if (protect || typeof e.detail !== 'string') return;
+    if (greeted || typeof e.detail !== 'string') return;
+    let hello;
+    try { hello = JSON.parse(e.detail); } catch { return; }
+    if (typeof hello?.channel !== 'string') return;
+    greeted = true;
     e.preventDefault();
+    const active = !hello.privateOnly || api.extension?.inIncognitoContext === true;
+    document.dispatchEvent(new CustomEvent(hello.channel, { detail: JSON.stringify({ active }) }));
+    if (!active) return;
     protect = true;
-    const name = e.detail;
     Promise.resolve(post({ type: 'seed' })).then(seed => {
-      if (typeof seed === 'number') document.dispatchEvent(new CustomEvent(name, { detail: String(seed) }));
+      if (typeof seed === 'number') document.dispatchEvent(new CustomEvent(hello.channel, { detail: String(seed) }));
     });
     schedule();
   });

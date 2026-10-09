@@ -27,6 +27,12 @@
   const doc = document;
   const P = name => W[name] && W[name].prototype;
 
+  // Private-window-only mode (see private-only.js): defenses stay inert until the bridge,
+  // which can tell a private window apart, says otherwise. Otherwise they're always on.
+  const privateOnly = W.__wssPrivateOnly === true;
+  delete W.__wssPrivateOnly;
+  let on = !privateOnly;
+
   /* ---------- the per-site seed ---------- */
   // The seed comes from the background (secret, per site, per session). The bridge fetches it
   // asynchronously and delivers it on an event name invented here. That name is handed to the
@@ -37,15 +43,22 @@
   let seed = null;
   let active = null;
   const seedNow = () => (active ??= (seed ?? random32()));
+  // Two kinds of message arrive on the channel: the bridge's immediate reply ({"active":…},
+  // sent synchronously inside the handoff, so still before any page script), then the seed.
   apply(listen, doc, [channel, e => {
-    const s = Number(apply(detailOf, e, []));
+    const text = String(apply(detailOf, e, []));
+    if (text[0] === '{') {
+      try { if (privateOnly) on = JSON.parse(text).active === true; } catch (_) { /* ignore */ }
+      return;
+    }
+    const s = Number(text);
     if (seed === null && Number.isFinite(s)) seed = s >>> 0;
   }]);
   // Whichever of core.js and bridge.js runs second triggers the handoff. The bridge cancels
   // the event to confirm receipt, after which the name is never sent again.
   let delivered = false;
   const hello = () => {
-    if (!delivered) delivered = !apply(dispatch, doc, [new EventCtor('wss:hello', { detail: channel, cancelable: true })]);
+    if (!delivered) delivered = !apply(dispatch, doc, [new EventCtor('wss:hello', { detail: JSON.stringify({ channel, privateOnly }), cancelable: true })]);
   };
   apply(listen, doc, ['wss:bridge-ready', hello]);
   hello();
@@ -65,10 +78,11 @@
   };
 
   /* ---------- wrapping ---------- */
+  // Every wrapper passes straight through to the browser while protection is inert.
   function override(proto, name, fn) { // fn(native, self, args)
     const d = proto && getDesc(proto, name);
     if (!d || typeof d.value !== 'function') return;
-    d.value = new ProxyCtor(d.value, { apply: (native, self, args) => fn(native, self, args) });
+    d.value = new ProxyCtor(d.value, { apply: (native, self, args) => on ? fn(native, self, args) : apply(native, self, args) });
     defineProp(proto, name, d);
   }
   function overrideGetter(proto, name, fn) { // fn(realValue) -> value to return
@@ -77,6 +91,7 @@
     d.get = new ProxyCtor(d.get, {
       apply(native, self, args) {
         const real = apply(native, self, args);
+        if (!on) return real;
         try { return fn(real); } catch (_) { return real; }
       },
     });

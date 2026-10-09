@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scriptPlan, rulesetPlan, dynamicRules, buildRulesets, sitePatterns, protectFiles } from '../src/shared/plan.js';
+import { scriptPlan, rulesetPlan, dynamicRules, sessionRules, buildRulesets, sitePatterns, protectFiles } from '../src/shared/plan.js';
 import { normalize, siteMode, withSite, DEFAULTS } from '../src/shared/settings.js';
 
 const settings = patch => normalize(patch);
@@ -49,18 +49,45 @@ test('IP addresses and localhost get a single exact pattern', () => {
 });
 
 test('blocking only happens where protection is on', () => {
-  const offByDefault = dynamicRules(settings({}));
+  const offByDefault = sessionRules(settings({}));
   assert.equal(offByDefault[0].action.type, 'allowAllRequests');
   assert.deepEqual(offByDefault[0].condition, { resourceTypes: ['main_frame'] }, 'every page exempt');
-  const oneOn = dynamicRules(settings({ sites: { 'news.com': 'on' } }));
+  const oneOn = sessionRules(settings({ sites: { 'news.com': 'on' } }));
   assert.deepEqual(oneOn[0].condition.excludedRequestDomains, ['news.com']);
-  const onByDefault = dynamicRules(settings({ protectDefault: true, sites: { 'bank.com': 'off' } }));
+  const onByDefault = sessionRules(settings({ protectDefault: true, sites: { 'bank.com': 'off' } }));
   assert.deepEqual(onByDefault[0].condition.requestDomains, ['bank.com']);
-  assert.deepEqual(dynamicRules(settings({ protectDefault: true })), [], 'nothing exempt');
+  assert.deepEqual(sessionRules(settings({ protectDefault: true })), [], 'nothing exempt');
+});
+
+test('pausing turns everything off until it ends', () => {
+  const now = Date.UTC(2026, 9, 8);
+  const paused = settings({ protectDefault: true, pausedUntil: now + 3600000 });
+  assert.deepEqual(scriptPlan(paused, now).map(p => p.id), ['wss-observe']);
+  assert.deepEqual(sessionRules(paused, [7], now)[0].condition, { resourceTypes: ['main_frame'] }, 'every page exempt, private tabs too');
+  assert.deepEqual(scriptPlan(paused, now + 3600001).map(p => p.id), ['wss-protect'], 'over once the time passes');
+  assert.deepEqual(scriptPlan(settings({ protectDefault: true, pausedUntil: -1 }), now).map(p => p.id), ['wss-observe'], 'until restart');
+});
+
+test('private windows can always be protected', () => {
+  const s = settings({ privateMode: 'always' });
+  const [main] = scriptPlan(s);
+  assert.equal(main.id, 'wss-private');
+  assert.deepEqual(main.js.slice(0, 3), ['content/gpc.js', 'content/protect/private-only.js', 'content/protect/core.js'],
+    'protection files are there, behind the private-only flag');
+  const [rule] = sessionRules(s, [12, 5]);
+  assert.deepEqual(rule.condition.excludedTabIds, [5, 12], 'private tabs are not exempt from blocking');
+  assert.ok(!sessionRules(settings({}), [12])[0].condition.excludedTabIds, '"follow" leaves private tabs alone');
+});
+
+test('imported settings keep only known keys', () => {
+  const s = normalize({ protectDefault: true, evil: 'x', __proto__: { polluted: true } });
+  assert.equal(s.protectDefault, true);
+  assert.ok(!('evil' in s));
 });
 
 test('allowed companies are never blocked', () => {
   const rules = dynamicRules(settings({ protectDefault: true, allowedVendors: ['Hotjar'] }));
+  assert.deepEqual(dynamicRules(settings({})), []);
   assert.equal(rules[0].action.type, 'allow');
   assert.deepEqual(rules[0].condition.requestDomains, ['hotjar.com', 'hotjar.io']);
   assert.ok(rules[0].priority > buildRulesets().block_replay[0].priority);
@@ -71,7 +98,7 @@ test('rulesets follow settings; fraud blocking is off by default; GPC outranks e
   assert.deepEqual(plan.enableRulesetIds.sort(), ['block_fingerprint', 'block_replay', 'gpc']);
   assert.deepEqual(plan.disableRulesetIds, ['block_fraud']);
   const sets = buildRulesets();
-  for (const r of dynamicRules(settings({ allowedVendors: ['Hotjar'] }))) assert.ok(sets.gpc[0].priority > r.priority);
+  for (const r of [...dynamicRules(settings({ allowedVendors: ['Hotjar'] })), ...sessionRules(settings({}))]) assert.ok(sets.gpc[0].priority > r.priority);
 });
 
 test('generated blocklists come from the vendor list', () => {

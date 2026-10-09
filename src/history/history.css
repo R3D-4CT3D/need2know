@@ -1,6 +1,13 @@
 .tools { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
 .tools input { flex: 1; min-width: 180px; width: auto; }
 .sites-h { margin-top: 36px; }
+.week { margin: 0 0 28px; }
+.week h2 { font-size: 1.1rem; margin-bottom: 6px; }
+.week ul { margin: 0; padding-left: 20px; }
+.week li { margin-bottom: 4px; }
+.week .late { color: var(--stamp); font-weight: 700; }
+td.req { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+td.req button { background: none; border: 0; padding: 0; color: var(--muted); font-size: 12px; text-decoration: underline; }
 .intro { color: var(--muted); margin: 0 0 14px; max-width: 66ch; font-size: 15px; }
 .follow { border-top: 1.5px solid var(--ink); padding-top: 14px; margin-top: 8px; }
 .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }

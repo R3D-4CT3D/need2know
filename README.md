@@ -83,8 +83,25 @@ The canvas rule follows the OpenWPM heuristic from Englehardt & Narayanan, *Onli
 ## How protection works
 
 Detection always runs. Protection is the user's choice: off by default, switchable per site in the
-popup, and configurable in Settings (default for all sites, each defense, each blocking category,
-companies to always allow, badge, history retention, export and erase).
+popup, pausable for an hour or until restart, and configurable in Settings (default for all
+sites, each defense, each blocking category, companies to always allow, private windows, badge,
+history retention, sites never recorded, import, export and erase).
+
+### Private windows
+
+Browsers keep extensions out of private windows until you allow them: in Chromium browsers,
+**Details → Allow in Incognito** (Edge: *InPrivate*); in Firefox, **about:addons → Run in Private
+Windows**. Settings shows whether it's allowed. Once it is:
+
+- **Private windows get their own seeds.** A site sees a different "you" in a private window than
+  in a normal one, so it can't link the two visits.
+- **"Always protect in private windows"** protects private windows even on sites that are off in
+  normal ones. A page script can't tell it's in a private window; only the extension's isolated
+  script can (`extension.inIncognitoContext`). So the protection files are injected behind
+  `private-only.js`, stay inert, and switch on when the bridge confirms a private window. That
+  handoff is synchronous and happens before any page script runs. Network blocking does the same
+  with session rules that exclude open private tabs from the "protection off" exemption.
+- **Private windows are never recorded** in history.
 
 | Signal | Defense |
 |---|---|
@@ -131,6 +148,7 @@ Design details worth knowing:
 | `scripting` | To switch protection on or off per site. |
 | `declarativeNetRequest` | To block session recorders and fingerprinting services, and send the GPC header. |
 | `storage` | Settings, per-tab reports and your local history. |
+| `alarms` | To end a pause on time. |
 | `privacy` | Only for WebRTC IP leak protection, which stays off until you turn it on. |
 
 No data leaves your browser. Firefox's manifest declares `data_collection_permissions: none`.
@@ -189,6 +207,8 @@ No data leaves your browser. Firefox's manifest declares `data_collection_permis
   (Firefox Strict mode and Brave do).
 - **Protection isn't a guarantee.** Sites have many signals. Protect mode removes the strongest ones,
   but IP address, screen size, time zone and language still narrow you down.
+- **Private windows are tested by unit tests, not end to end.** Playwright can't open an incognito
+  window with an extension allowed in it, so the browser suite covers the normal-window side.
 - **Very early fingerprinting gets a random seed** for that page load (see *A secret seed* above).
   That's more private, but the site sees a different you on every reload.
 - **Fraud and bot detection isn't blocked by default** because banks and checkouts depend on it.

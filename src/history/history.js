@@ -1,7 +1,9 @@
 import { api } from '../shared/api.js';
 import { GRADES, gradeFor } from '../shared/scoring.js';
 import { TECHNIQUES } from '../shared/techniques.js';
-import { followers } from '../shared/insights.js';
+import { followers, weekSummary } from '../shared/insights.js';
+import { loadSettings, saveSettings } from '../shared/settings.js';
+import { siteOf } from '../shared/domain.js';
 import { asRequest } from '../shared/letters.js';
 
 const $ = id => document.getElementById(id);
@@ -28,6 +30,16 @@ async function load() {
     ? `${sites.length} site${sites.length === 1 ? '' : 's'} probed your browser. ${heavy} actively fingerprinted you.`
     : 'Nothing recorded yet. Browse normally and check back.';
 
+  const w = weekSummary(history, requests);
+  const date = t => new Date(t).toLocaleDateString([], { month: 'short', day: 'numeric' });
+  const items = [];
+  if (w.sites) items.push(el('li', { text: `${w.sites} site${w.sites === 1 ? '' : 's'} probed your browser, ${w.heavy} actively fingerprinted you.` }));
+  if (w.followers.length) items.push(el('li', { text: `Followed you across sites: ${w.followers.map(f => `${f.vendor ?? f.site} (${f.count} sites)`).join(', ')}.` }));
+  for (const r of w.overdue) items.push(el('li', { class: 'late', text: `${r.host} hasn't replied to your deletion request (due ${date(r.dueAt)}).` }));
+  for (const r of w.dueSoon) items.push(el('li', { text: `${r.host} must reply to your deletion request by ${date(r.dueAt)}.` }));
+  $('week').hidden = !items.length;
+  $('week-list').replaceChildren(...items);
+
   const top = followers(history);
   $('follow').hidden = !top.length;
   const max = top[0]?.count ?? 1;
@@ -52,6 +64,20 @@ function requestCell(host) {
     late ? `Reply overdue since ${short(r.dueAt)}` : `Sent ${short(r.sentAt)} · reply due ${short(r.dueAt)}`);
 }
 
+function neverButton(host) {
+  const b = el('button', { text: 'Never record' });
+  b.addEventListener('click', async () => {
+    const site = siteOf(host);
+    if (!confirm(`Delete ${site} from history and never record it again? You can undo this in Settings.`)) return;
+    const settings = await loadSettings(api);
+    await saveSettings(api, { historyExclude: [...new Set([...settings.historyExclude, site])] });
+    for (const h of Object.keys(history)) if (siteOf(h) === site) delete history[h];
+    await api.storage.local.set({ history });
+    load();
+  });
+  return b;
+}
+
 function render() {
   const q = $('filter').value.trim().toLowerCase();
   $('rows').replaceChildren(...sites.filter(s => s.host.includes(q)).map(s => {
@@ -62,7 +88,7 @@ function render() {
       el('td', {}, pill),
       el('td', { class: 'caught' }, el('div', { class: 'chips' }, s.caught.map(id => el('span', { text: TECHNIQUES[id]?.title ?? id })))),
       el('td', { class: 'when', text: when(s.lastSeen) }),
-      el('td', { class: 'req' }, requestCell(s.host)));
+      el('td', { class: 'req' }, requestCell(s.host), neverButton(s.host)));
   }));
 }
 
