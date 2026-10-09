@@ -1,0 +1,30 @@
+.group { border-top: 1.5px solid var(--ink); padding: 16px 0 8px; margin-top: 8px; }
+h3 { font-size: 1rem; margin: 18px 0 2px; color: var(--muted); font-weight: 700; }
+.choice { border: 0; padding: 0; margin: 0; }
+.choice legend { font-weight: 700; color: var(--muted); padding: 0; margin-bottom: 2px; }
+.opt { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; padding: 8px 0; cursor: pointer; max-width: 70ch; }
+.opt.row { grid-template-columns: 1fr auto; align-items: center; }
+.opt input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--stamp); }
+.opt span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.opt b { display: block; color: var(--ink); font-size: 15.5px; }
+.opt .warn { color: var(--stamp); font-style: normal; font-weight: 700; }
+.opt select, .add select { width: auto; }
+.hint { color: var(--muted); font-size: 14px; margin: 4px 0 10px; max-width: 70ch; }
+.vendors { margin: 8px 0 0; }
+.vendors summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+.vendors .kind { font-size: 13px; color: var(--muted); margin: 10px 0 4px; font-weight: 700; }
+.vendors .list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px 16px; }
+.vendors label { display: flex; gap: 8px; align-items: center; font-size: 14px; padding: 3px 0; cursor: pointer; }
+.vendors input { accent-color: var(--stamp); }
+.sites { border-collapse: collapse; width: 100%; max-width: 620px; }
+.sites td { padding: 7px 10px 7px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+.sites td.site { font-family: var(--mono); }
+.sites td.none { color: var(--muted); }
+.sites select { width: auto; font-size: 13px; padding: 4px 6px; }
+.sites button { background: none; border: 0; color: var(--stamp); font-weight: 700; padding: 0; font-size: 13px; }
+.add { display: flex; gap: 8px; margin-top: 12px; max-width: 620px; flex-wrap: wrap; }
+.add input { flex: 1; min-width: 160px; width: auto; }
+.data { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 6px; }
+.btn.danger { border-color: var(--stamp); color: var(--stamp); }
+.saved { position: fixed; right: 16px; bottom: 16px; margin: 0; max-width: calc(100% - 32px); padding: 10px 14px; border-radius: 6px;
+  background: var(--ink); color: var(--bg); font-size: 14px; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,.2); }

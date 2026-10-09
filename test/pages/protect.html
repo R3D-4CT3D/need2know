@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Protection test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}pre{font-size:13px;white-space:pre-wrap}</style></head>
+<body>
+  <h1>Protection test</h1>
+  <p>What this site sees. With Protect mode on, the canvas and audio values change from site to site (try this page on <code>localhost:8080</code> and <code>127.0.0.1:8081</code>) but stay the same on reload. The GPU name should be generic.</p>
+  <pre id="out">Measuring…</pre>
+  <p id="status"></p>
+  <script>
+  addEventListener('load', async () => {
+    // Like real fingerprinting libraries, this runs after the page loads, once the per-site seed has arrived.
+    const hex = async s => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))].slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
+    const canvas = () => {
+      const c = document.createElement('canvas'); c.width = 220; c.height = 50;
+      const x = c.getContext('2d'); x.fillStyle = '#f60'; x.fillRect(100, 1, 60, 20);
+      x.font = '15px Arial'; x.fillStyle = '#069'; x.fillText('Cwm fjordbank glyphs vext quiz', 2, 15);
+      return c;
+    };
+    const c = canvas();
+    const r = {};
+    r.canvas = await hex(c.toDataURL());
+    r.canvasAgain = await hex(c.toDataURL());
+    const img = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+    const viaUrl = new Image(); viaUrl.src = c.toDataURL(); await viaUrl.decode();
+    const d = document.createElement('canvas'); d.width = c.width; d.height = c.height;
+    d.getContext('2d').drawImage(viaUrl, 0, 0);
+    r.pixelsMatchExport = d.getContext('2d').getImageData(0, 0, c.width, c.height).data.every((v, i) => v === img[i]);
+    try {
+      const ac = new OfflineAudioContext(1, 5000, 44100);
+      const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = 10000;
+      const comp = ac.createDynamicsCompressor(); o.connect(comp); comp.connect(ac.destination); o.start(0);
+      const buf = await ac.startRendering(); const data = buf.getChannelData(0);
+      let s = 0; for (let i = 4500; i < 5000; i++) s += Math.abs(data[i]); r.audio = s.toFixed(12);
+    } catch (e) { r.audio = 'error ' + e.message; }
+    const gl = document.createElement('canvas').getContext('webgl');
+    const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
+    r.gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : null;
+    r.cores = navigator.hardwareConcurrency;
+    r.gpc = navigator.globalPrivacyControl === true;
+    r.gpcHeader = await fetch('/headers').then(res => res.json()).then(h => h['sec-gpc'] ?? null).catch(() => 'error');
+    r.recorderLoaded = await new Promise(res => {
+      const s = document.createElement('script');
+      s.src = 'https://static.hotjar.com/c/hotjar-what-sites-see-test.js';
+      s.onload = () => res(true); s.onerror = () => res(false);
+      document.head.appendChild(s);
+    });
+    document.getElementById('out').textContent = JSON.stringify(r, null, 2);
+    const st = document.getElementById('status'); st.dataset.result = JSON.stringify(r); st.dataset.done = '1'; st.textContent = 'done';
+  });
+  </script>
+</body>
+</html>

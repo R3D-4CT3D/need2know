@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deletion Request</title>
+<link rel="icon" href="../icons/icon-32.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/page.css">
+<link rel="stylesheet" href="request.css">
+<script type="module" src="request.js"></script>
+</head>
+<body>
+<main>
+  <header class="mast">
+    <span class="wm"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="var(--stamp)"/></svg>What Sites See</span>
+    <nav class="nav"><a href="../checkup/checkup.html">Checkup</a><a href="../history/history.html">History</a><a href="../options/options.html">Settings</a></nav>
+  </header>
+
+  <section id="pick" hidden>
+    <h1>Ask a site to delete your data</h1>
+    <p class="lede">Choose a site from your history.</p>
+    <select id="site-select" aria-label="Site"></select>
+  </section>
+
+  <section id="main" hidden>
+    <h1>Ask <span id="host-title"></span> to delete your data</h1>
+    <p class="lede">A fingerprint can't be un-taken, but privacy laws let you make the site delete what it stored with it, stop selling it, and pass the request on to the companies it shared it with. This page writes the letter, with what the extension recorded as evidence. You send it yourself, from your own email or the site's privacy form, so the reply comes to you and the request is legally yours.</p>
+
+    <div class="steps">
+      <section class="step">
+        <h2><span class="n">1</span>Where you live</h2>
+        <select id="law" aria-label="Where you live"></select>
+        <input id="state" type="text" placeholder="Your state, e.g. Colorado" aria-label="Your state" hidden>
+        <p class="note" id="law-note"></p>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">2</span>Your details <small>(optional, saved only in this browser)</small></h2>
+        <div class="row">
+          <input id="name" type="text" placeholder="Your name" aria-label="Your name" autocomplete="name">
+          <input id="email" type="email" placeholder="Email for their reply" aria-label="Your email" autocomplete="email">
+        </div>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">3</span>Your letter</h2>
+        <input id="subject" type="text" aria-label="Subject">
+        <textarea id="body" rows="22" aria-label="Letter"></textarea>
+        <div class="actions">
+          <button class="btn primary" id="copy">Copy letter</button>
+          <button class="btn" id="download">Download .txt</button>
+          <button class="btn" id="reset" hidden>Undo my edits</button>
+          <span class="done" id="copied" role="status"></span>
+        </div>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">4</span>Send it yourself</h2>
+        <p class="note">This extension can't send email for you. Use one of these:</p>
+        <ul class="where" id="where"></ul>
+        <div class="row mail">
+          <input id="to" type="email" placeholder="privacy@… (from their privacy policy)" aria-label="Send to">
+          <a class="btn" id="mailto" href="#">Open as an email draft</a>
+        </div>
+        <p class="note">"Open as an email draft" starts a new email in your default mail app with the letter filled in; you review it and press Send. If nothing opens (common with webmail like Gmail), use Copy letter and paste it into a new email or the site's form.</p>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">5</span>Track the deadline</h2>
+        <label class="sent"><input type="checkbox" id="sent"> <span>I've sent it. Track the reply deadline.</span></label>
+        <p class="note" id="sent-when">Ticking this records the date in this browser only. History then shows when the reply is due and flags it if it's late.</p>
+      </section>
+
+      <section class="step" id="vendors-step" hidden>
+        <h2><span class="n">6</span>Ask the companies directly</h2>
+        <p class="note">These third parties ran on the page. Asking them directly makes sure the request reaches them.</p>
+        <ul class="where" id="vendors"></ul>
+      </section>
+    </div>
+
+    <section class="brokers card">
+      <h2>Data brokers</h2>
+      <p>Fingerprint-linked profiles are often bought and sold by data brokers you've never heard of.</p>
+      <ul>
+        <li><b>In California:</b> the state's <a href="https://privacy.ca.gov/drop/" target="_blank" rel="noopener">Delete Request and Opt-out Platform (DROP)</a> sends one deletion request to every registered data broker at once. It's free.</li>
+        <li><b>Elsewhere:</b> California's <a href="https://cppa.ca.gov/data_broker_registry/" target="_blank" rel="noopener">data broker registry</a> lists brokers and how to contact them. You can send them this same letter.</li>
+      </ul>
+    </section>
+    <p class="fine">This is a template to help you exercise your rights, not legal advice.</p>
+  </section>
+</main>
+</body>
+</html>

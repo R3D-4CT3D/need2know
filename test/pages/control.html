@@ -14,6 +14,11 @@
     x.font = '14px sans-serif'; x.measureText('hello');
     // The site's own keyboard shortcut: first-party, so it isn't scored.
     document.addEventListener('keydown', e => { if (e.key === '/') document.getElementById('status').textContent = 'Shortcut pressed'; });
+    // A font-loading check (like FontFaceObserver): a few styled spans measured. Far below probing.
+    for (const ff of ['"Inter", sans-serif', '"Inter", serif', 'sans-serif']) {
+      const s = document.createElement('span'); s.textContent = 'BESbswy'; s.style.fontFamily = ff;
+      document.body.appendChild(s); void s.offsetWidth; s.remove();
+    }
     // Responsive layout reads a couple of screen values: far below a sweep.
     void [screen.width, screen.height];
   </script>

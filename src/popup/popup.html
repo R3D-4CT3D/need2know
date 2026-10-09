@@ -19,6 +19,14 @@
     <p class="sub">Then reload the page you want to check.</p>
   </section>
 
+  <section class="shield" id="shield" hidden>
+    <div class="shield-row">
+      <label class="switch"><input type="checkbox" id="protect-site" role="switch"><span class="track" aria-hidden="true"></span><span id="shield-label">Protection</span></label>
+      <span class="mode" id="shield-mode"></span>
+    </div>
+    <p class="mismatch" id="mismatch" hidden><span id="mismatch-text"></span> <button class="reload" id="reload">Reload now</button></p>
+  </section>
+
   <section class="summary">
     <div class="score" aria-live="polite"><span id="score">–</span><small>/100</small></div>
     <div><div class="label" id="label">Loading…</div><div class="sub" id="sub"></div></div>
@@ -27,12 +35,22 @@
 
   <ol class="items" id="items"></ol>
   <p class="empty" id="empty" hidden></p>
+  <p class="tip" id="tip" hidden></p>
 
   <details class="hosts" id="hosts" hidden>
     <summary id="hosts-sum"></summary>
     <ul class="mono" id="hosts-list"></ul>
   </details>
 
-  <footer><button class="link" id="open-history">Every site that has fingerprinted you →</button></footer>
+  <div class="act" id="act" hidden>
+    <button class="btn-act" id="request">Ask this site to delete my data</button>
+    <button class="btn-act" id="evidence">Evidence report</button>
+  </div>
+
+  <footer>
+    <button class="link" data-open="checkup/checkup.html">Checkup</button>
+    <button class="link" data-open="history/history.html">History</button>
+    <button class="link" data-open="options/options.html">Settings</button>
+  </footer>
 </body>
 </html>

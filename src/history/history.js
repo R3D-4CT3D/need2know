@@ -1,6 +1,8 @@
 import { api } from '../shared/api.js';
 import { GRADES, gradeFor } from '../shared/scoring.js';
 import { TECHNIQUES } from '../shared/techniques.js';
+import { followers } from '../shared/insights.js';
+import { asRequest } from '../shared/letters.js';
 
 const $ = id => document.getElementById(id);
 function el(tag, props, ...kids) {
@@ -14,16 +16,40 @@ function el(tag, props, ...kids) {
 }
 const when = t => new Date(t).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
+let history = {};
 let sites = [];
+let requests = {};
 
 async function load() {
-  const { history = {} } = await api.storage.local.get('history');
+  ({ history = {}, requests = {} } = await api.storage.local.get(['history', 'requests']));
   sites = Object.values(history).sort((a, b) => b.maxScore - a.maxScore || b.lastSeen - a.lastSeen);
   const heavy = sites.filter(s => s.maxScore >= 25).length;
   $('summary').textContent = sites.length
     ? `${sites.length} site${sites.length === 1 ? '' : 's'} probed your browser. ${heavy} actively fingerprinted you.`
     : 'Nothing recorded yet. Browse normally and check back.';
+
+  const top = followers(history);
+  $('follow').hidden = !top.length;
+  const max = top[0]?.count ?? 1;
+  $('bars').replaceChildren(...top.map(f => {
+    const bar = el('span');
+    bar.style.width = `${Math.round(f.count / max * 100)}%`;
+    return el('li', { title: f.sites.join(', ') },
+      el('div', { class: 'who' }, f.vendor ? [el('b', { text: f.vendor }), ' ', el('span', { text: f.site })] : el('span', { text: f.site })),
+      el('div', { class: 'bar', 'aria-hidden': 'true' }, bar),
+      el('div', { class: 'n', text: `${f.count} sites` }));
+  }));
   render();
+}
+
+const short = t => new Date(t).toLocaleDateString([], { month: 'short', day: 'numeric' });
+function requestCell(host) {
+  const r = asRequest(requests[host]);
+  const href = `../request/request.html?host=${encodeURIComponent(host)}`;
+  if (!r) return el('a', { href, text: 'Request deletion' });
+  const late = Date.now() > r.dueAt;
+  return el('a', { href, class: late ? 'late' : 'sent', title: `Sent ${short(r.sentAt)}` },
+    late ? `Reply overdue since ${short(r.dueAt)}` : `Sent ${short(r.sentAt)} · reply due ${short(r.dueAt)}`);
 }
 
 function render() {
@@ -35,11 +61,18 @@ function render() {
       el('td', { class: 'site', text: s.host }),
       el('td', {}, pill),
       el('td', { class: 'caught' }, el('div', { class: 'chips' }, s.caught.map(id => el('span', { text: TECHNIQUES[id]?.title ?? id })))),
-      el('td', { class: 'when', text: when(s.lastSeen) }));
+      el('td', { class: 'when', text: when(s.lastSeen) }),
+      el('td', { class: 'req' }, requestCell(s.host)));
   }));
 }
 
 $('filter').addEventListener('input', render);
+$('export').addEventListener('click', () => {
+  const data = { exportedAt: new Date().toISOString(), tool: 'What Sites See', version: api.runtime.getManifest().version, sites: history, deletionRequests: requests };
+  const a = el('a', { href: URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })), download: 'what-sites-see-history.json' });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
 $('clear').addEventListener('click', async () => {
   if (!confirm('Delete the record of every site this extension has seen?')) return;
   await api.storage.local.remove('history');

@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Recorded page test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}input{font:16px monospace;padding:8px;width:100%}</style></head>
+<body>
+  <h1>Recorded page test</h1>
+  <p>Loads a session recorder that isn't blocked. Click into the field: the extension should warn you before you type. (Only works in the e2e test, which maps static.hotjar.com to this server.)</p>
+  <input id="field" placeholder="Click here">
+  <p id="status"></p>
+  <script src="http://static.hotjar.com:8081/c/recorder.js" onload="document.getElementById('status').textContent='recorder loaded'" onerror="document.getElementById('status').textContent='error: recorder did not load'"></script>
+</body>
+</html>

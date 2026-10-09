@@ -1,6 +1,6 @@
 {
   "name": "need2know",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "What Sites See: a cross-browser extension that catches websites fingerprinting you in real time.",
   "type": "module",
@@ -10,9 +10,15 @@
     "build:firefox": "node scripts/build.mjs firefox",
     "icons": "node scripts/make-icons.mjs",
     "serve": "node scripts/serve.mjs",
-    "test": "node --test \"test/*.test.js\""
+    "test": "node --test \"test/*.test.js\"",
+    "test:e2e": "node test/e2e.mjs",
+    "lint:firefox": "npm run build:firefox && npx -y web-ext lint --source-dir dist/firefox"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@fingerprintjs/fingerprintjs": "5.3.0",
+    "playwright-core": "1.63.0"
   }
 }

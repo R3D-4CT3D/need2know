@@ -15,6 +15,7 @@
   }
 }
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); line-height: 1.5; }
 .mono { font-family: var(--mono); }
 button { font: inherit; color: inherit; cursor: pointer; }

@@ -17,28 +17,60 @@
       "32": "icons/icon-32.png"
     }
   },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
-  "permissions": ["storage"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "scripting",
+    "declarativeNetRequest",
+    "privacy"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content/hooks.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/bridge.js"
+      ],
       "run_at": "document_start",
       "all_frames": true,
       "match_about_blank": true,
-      "world": "MAIN"
-    },
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content/bridge.js"],
-      "run_at": "document_start",
-      "all_frames": true,
-      "match_about_blank": true
+      "match_origin_as_fallback": true
     }
   ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "block_replay",
+        "enabled": true,
+        "path": "rules/block_replay.json"
+      },
+      {
+        "id": "block_fingerprint",
+        "enabled": true,
+        "path": "rules/block_fingerprint.json"
+      },
+      {
+        "id": "block_fraud",
+        "enabled": false,
+        "path": "rules/block_fraud.json"
+      },
+      {
+        "id": "gpc",
+        "enabled": true,
+        "path": "rules/gpc.json"
+      }
+    ]
+  },
   "minimum_chrome_version": "111"
 }

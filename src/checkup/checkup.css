@@ -1,0 +1,31 @@
+.score { display: flex; align-items: center; gap: 22px; }
+.score .big { font: 700 52px/1 var(--mono); color: var(--grade, var(--muted)); white-space: nowrap; }
+.score .big small { font-size: 16px; color: var(--muted); font-weight: 400; }
+.score > div:last-child { flex: 1; }
+.meter { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+.meter span { display: block; height: 100%; width: 0; background: var(--grade, var(--muted)); transition: width .5s; }
+.block { margin-top: 36px; border-top: 1.5px solid var(--ink); padding-top: 14px; }
+.intro { color: var(--muted); margin: 0 0 12px; max-width: 66ch; font-size: 15px; }
+.intro.foot { margin-top: 12px; font-size: 14px; }
+.checks { list-style: none; margin: 0; padding: 0; }
+.checks li { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: start; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.checks .mark { font: 700 16px var(--mono); }
+.checks .mark.on { color: var(--ok); }
+.checks .mark.off { color: var(--stamp); }
+.checks b { display: block; }
+.checks .why { color: var(--muted); font-size: 14px; }
+.checks button { border: 1.5px solid var(--stamp); background: none; color: var(--stamp); border-radius: 4px; padding: 3px 10px; font-weight: 700; font-size: 13px; white-space: nowrap; }
+.checks input[type=checkbox] { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ok); }
+.table-wrap { overflow-x: auto; }
+.compare { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+.compare th { text-align: left; color: var(--muted); font-weight: 400; padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); }
+.compare td { padding: 8px 10px 8px 0; border-bottom: 1px dashed var(--line); vertical-align: top; }
+.compare td.v { font: 12.5px/1.45 var(--mono); overflow-wrap: anywhere; max-width: 200px; }
+.compare td.v.changed { color: var(--ok); }
+.compare .wait { color: var(--muted); }
+.res { font-weight: 700; white-space: nowrap; }
+.res.ok { color: var(--ok); }
+.res.no { color: var(--stamp); }
+.res.meh { color: var(--warn); }
+.probes { position: absolute; width: 0; height: 0; overflow: hidden; }
+.probes iframe { width: 0; height: 0; border: 0; }

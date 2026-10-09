@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence Report</title>
+<link rel="icon" href="../icons/icon-32.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/page.css">
+<link rel="stylesheet" href="report.css">
+<script type="module" src="report.js"></script>
+</head>
+<body>
+<main>
+  <header class="mast no-print">
+    <span class="wm"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="var(--stamp)"/></svg>What Sites See</span>
+    <div class="tools"><button class="btn" id="json">Download JSON</button><button class="btn primary" id="print">Print or save as PDF</button></div>
+  </header>
+
+  <p class="kicker">Fingerprinting evidence report</p>
+  <h1 id="title">Loading…</h1>
+  <p class="empty" id="empty" hidden>No report for this tab. It may have been closed or navigated away.</p>
+
+  <section id="doc" hidden>
+    <dl class="meta">
+      <dt>Page</dt><dd class="mono" id="m-url"></dd>
+      <dt>Recorded</dt><dd id="m-when"></dd>
+      <dt>Browser</dt><dd class="mono" id="m-ua"></dd>
+      <dt>Protection</dt><dd id="m-protect"></dd>
+      <dt>Score</dt><dd id="m-score"></dd>
+      <dt>Tool</dt><dd id="m-tool"></dd>
+    </dl>
+
+    <h2>Findings</h2>
+    <table class="findings">
+      <thead><tr><th>Technique</th><th>Outcome</th><th>Calls</th><th>Source</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <h2>Third-party sites contacted</h2>
+    <p class="mono list" id="sites"></p>
+
+    <h2>Integrity</h2>
+    <p>SHA-256 of the canonical JSON record (keys sorted, no whitespace). Anyone with the JSON file can recompute it to confirm the record hasn't been altered.</p>
+    <p class="hash mono" id="hash"></p>
+  </section>
+</main>
+</body>
+</html>

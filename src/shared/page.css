@@ -1,0 +1,20 @@
+/* Shared layout for the full-page views: checkup, history, settings, requests, reports. */
+main { max-width: 900px; margin: 0 auto; padding: 28px 20px 64px; }
+.mast { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.nav { display: flex; gap: 18px; font-size: 14px; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover, .nav a[aria-current] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; letter-spacing: -.02em; margin: 32px 0 8px; }
+h2 { font-size: 1.3rem; margin: 0 0 10px; }
+.lede { color: var(--muted); margin: 0 0 24px; max-width: 62ch; }
+a { color: var(--stamp); }
+.btn { display: inline-block; border: 1.5px solid var(--ink); background: var(--paper); border-radius: 4px; padding: 6px 14px; font-weight: 700; text-decoration: none; color: var(--ink); }
+.btn.primary { background: var(--stamp); border-color: var(--stamp); color: #fff; }
+.btn:disabled { opacity: .5; cursor: default; }
+.card { border: 1.5px solid var(--ink); border-radius: 6px; background: var(--paper); padding: 18px 20px; }
+input[type=text], input[type=email], input[type=search], select, textarea {
+  font: 15px var(--mono); padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 4px;
+  background: var(--paper); color: var(--ink); width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--stamp); }
+@media (max-width: 600px) { main { padding: 20px 16px 48px; } }

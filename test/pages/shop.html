@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Example Shop</title>
+<style>
+  body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}
+  label{display:block;margin:12px 0 4px;font-weight:700}
+  input{font:16px monospace;padding:8px;width:100%;box-sizing:border-box}
+  footer{margin-top:48px;border-top:1px solid #ccc;padding-top:12px;font-size:14px;display:flex;gap:16px}
+</style></head>
+<body>
+  <h1>Example Shop</h1>
+  <p>A typical store page: a session recorder, a third-party fingerprinting script, and a checkout form.</p>
+  <form onsubmit="return false">
+    <label for="email">Email</label><input id="email" type="email" autocomplete="email">
+    <label for="card">Card number</label><input id="card" autocomplete="cc-number">
+    <label for="pw">Password</label><input id="pw" type="password">
+  </form>
+  <p id="status"></p>
+  <footer>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/privacy-choices.html">Your Privacy Choices</a>
+    <a href="/terms.html">Terms</a>
+  </footer>
+  <!-- A session recorder tag, the way sites embed it. -->
+  <script async src="https://static.hotjar.com/c/hotjar-what-sites-see-test.js"></script>
+  <script src="http://127.0.0.1:8081/tracker.js"></script>
+</body>
+</html>

@@ -3,21 +3,23 @@
 //   min             the hook's running count (row.x) must reach this before it counts
 //   thirdPartyOnly  only scripts from other companies' domains count
 //   vendor          derived from the domains a page contacts, not from an API hook
+//   defense         what protection does about it: 'noise', 'generic', 'partial' or 'block'
+//   guard           which defense setting covers it (settings.defenses, content/protect/*.js)
 
 const list = names => names.length <= 1 ? names.join('')
   : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 
 export const TECHNIQUES = {
   'canvas-fp': {
-    title: 'Canvas fingerprinting', weight: 25,
+    title: 'Canvas fingerprinting', weight: 25, defense: 'noise', guard: 'canvas',
     why: () => 'Drew hidden text and read the pixels back. Tiny rendering differences from your GPU, drivers and fonts make the result unique to you.',
   },
   'session-replay': {
-    title: 'Session recording', weight: 25, vendor: true,
+    title: 'Session recording', weight: 25, vendor: true, defense: 'block',
     why: ({ vendors }) => `Loaded ${list(vendors)}, which can record your mouse, clicks, scrolling and typing so someone can replay your visit later.`,
   },
   'audio-fp': {
-    title: 'Audio fingerprinting', weight: 20,
+    title: 'Audio fingerprinting', weight: 20, defense: 'noise', guard: 'audio',
     why: () => 'Rendered a silent sound and measured the output. Your audio hardware and software leave a numeric signature.',
   },
   'font-probe': {
@@ -25,15 +27,15 @@ export const TECHNIQUES = {
     why: r => `Measured text in ${r.x} font settings to work out which fonts you have. That reveals your OS and apps like Office or Adobe.`,
   },
   'fp-vendor': {
-    title: 'Commercial fingerprinting service', weight: 20, vendor: true,
+    title: 'Commercial fingerprinting service', weight: 20, vendor: true, defense: 'block',
     why: ({ vendors }) => `Loaded ${list(vendors)}, a company whose product is identifying devices across visits.`,
   },
   'webgl-gpu': {
-    title: 'Graphics chip lookup', weight: 15,
+    title: 'Graphics chip lookup', weight: 15, defense: 'generic', guard: 'gpu',
     why: () => 'Asked WebGL for your exact GPU model, one of the most identifying single values a site can get.',
   },
   'hw-sweep': {
-    title: 'Hardware sweep', weight: 10, min: 10,
+    title: 'Hardware sweep', weight: 10, min: 10, defense: 'partial', guard: 'hardware',
     why: r => `Read ${r.x} device and screen properties, such as processor cores, memory, plugins and screen size.`,
   },
   'key-listen': {
@@ -41,11 +43,11 @@ export const TECHNIQUES = {
     why: () => 'A script from another company is listening to every key you press on this page.',
   },
   'fraud-vendor': {
-    title: 'Fraud and bot detection', weight: 10, vendor: true,
+    title: 'Fraud and bot detection', weight: 10, vendor: true, defense: 'block',
     why: ({ vendors }) => `Loaded ${list(vendors)}. Usually there to stop fraud or bots, but it builds a detailed profile of your device to do it.`,
   },
   'media-devices': {
-    title: 'Camera and mic count', weight: 8,
+    title: 'Camera and mic count', weight: 8, defense: 'generic', guard: 'device',
     why: () => 'Counted your cameras, microphones and speakers without asking permission.',
   },
   'webrtc': {
@@ -53,19 +55,19 @@ export const TECHNIQUES = {
     why: () => 'Set up a peer connection, which can expose your local and public IP addresses. Normal on video-call sites, suspicious elsewhere.',
   },
   'client-hints': {
-    title: 'Detailed device hints', weight: 6,
-    why: () => 'Requested your exact OS version, CPU architecture or device model.',
+    title: 'Exact OS version and device model', weight: 6, defense: 'generic', guard: 'device',
+    why: () => 'Asked your browser for extra detail it doesn\'t share by default: your exact operating system version, processor type and, on phones, the device model.',
   },
   'battery': {
-    title: 'Battery status', weight: 6,
+    title: 'Battery status', weight: 6, defense: 'generic', guard: 'device',
     why: () => 'Read your battery level and charging state, which once let trackers link visits across sites.',
   },
   'voices': {
-    title: 'Speech voices', weight: 6,
+    title: 'Speech voices', weight: 6, defense: 'generic', guard: 'device',
     why: () => 'Listed your text-to-speech voices, which depend on your OS and installed language packs.',
   },
   'keyboard-layout': {
-    title: 'Keyboard layout', weight: 6,
+    title: 'Keyboard layout', weight: 6, defense: 'generic', guard: 'device',
     why: () => 'Read your keyboard layout, a hint at the country your computer is set up for.',
   },
   'storage-estimate': {
@@ -73,7 +75,7 @@ export const TECHNIQUES = {
     why: () => 'Checked how much disk space it may use. That hints at your drive size and can reveal private browsing.',
   },
   'canvas-read': {
-    title: 'Canvas read', weight: 2,
+    title: 'Canvas read', weight: 2, defense: 'noise', guard: 'canvas',
     why: () => 'Read pixels back from a canvas without drawing text first. Usually harmless, like an image preview.',
   },
 };
