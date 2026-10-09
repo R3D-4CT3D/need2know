@@ -81,3 +81,8 @@ test('grades', () => {
   assert.equal(gradeFor(25), 'moderate');
   assert.equal(gradeFor(60), 'heavy');
 });
+
+test('a vendor blocked at the network level counts as blocked, even without an element error', () => {
+  const r = buildReport({ url: PAGE, blocked: ['www.clarity.ms'], frames: { 0: frame({}, ['www.clarity.ms']) } });
+  assert.equal(r.items.find(i => i.id === 'session-replay').status, 'blocked');
+});

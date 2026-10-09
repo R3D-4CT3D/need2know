@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fingerprinting Findings</title>
+<link rel="icon" href="../icons/icon-32.png">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/page.css">
+<link rel="stylesheet" href="findings.css">
+<script type="module" src="findings.js"></script>
+</head>
+<body>
+<main>
+  <header class="mast">
+    <span class="wm"><svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="var(--stamp)"/></svg>What Sites See</span>
+    <nav class="nav"><a href="../checkup/checkup.html">Checkup</a><a href="findings.html" aria-current="page">Findings</a><a href="../history/history.html">History</a><a href="../options/options.html">Settings</a></nav>
+  </header>
+
+  <h1 id="title">Fingerprinting on the web's top sites</h1>
+  <p class="lede" id="lede">Loading…</p>
+
+  <section class="tiles" id="tiles" aria-label="Headline numbers"></section>
+
+  <section class="block">
+    <h2>How often each technique was used</h2>
+    <p class="intro">Share of sites whose homepage used it. Hover a bar for how often a third party did it.</p>
+    <ol class="bars" id="techniques"></ol>
+  </section>
+
+  <section class="block">
+    <h2>How hard sites fingerprinted</h2>
+    <p class="intro">Number of sites in each score band.</p>
+    <ol class="bars" id="grades"></ol>
+  </section>
+
+  <section class="block" id="vendors-block">
+    <h2>Companies seen</h2>
+    <p class="intro">Session recorders, fingerprinting services and fraud detection, by share of sites.</p>
+    <ol class="bars" id="vendors"></ol>
+  </section>
+
+  <section class="block">
+    <h2>Highest scores</h2>
+    <table class="top"><thead><tr><th>Site</th><th>Rank</th><th>Score</th><th>Techniques</th></tr></thead><tbody id="top"></tbody></table>
+  </section>
+
+  <section class="block">
+    <h2>With protection on</h2>
+    <p id="protection"></p>
+    <ul class="breakage" id="breakage"></ul>
+    <p id="challenges" hidden></p>
+    <ul class="breakage" id="challenge-list"></ul>
+    <p id="undercount" hidden></p>
+    <p class="intro">Breakage flags are automatic: busy homepages change between visits (ads, experiments), so a flag isn't proof protection caused it.</p>
+  </section>
+
+  <section class="block method">
+    <h2>How this was measured</h2>
+    <ul id="method"></ul>
+  </section>
+</main>
+</body>
+</html>

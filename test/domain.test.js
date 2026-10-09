@@ -32,3 +32,14 @@ test('matchVendor matches subdomains but not lookalikes', () => {
   assert.equal(matchVendor('nothotjar.com'), null);
   assert.equal(matchVendor(''), null);
 });
+
+test('a company\'s own domains are not third parties', async () => {
+  const { entityOf } = await import('../src/shared/entities.js');
+  assert.equal(isThirdParty('www.gstatic.com', 'www.google.com'), false);
+  assert.equal(isThirdParty('static.xx.fbcdn.net', 'www.facebook.com'), false);
+  assert.equal(isThirdParty('abs.twimg.com', 'x.com'), false);
+  assert.equal(isThirdParty('www.gstatic.com', 'www.facebook.com'), true, 'different companies');
+  assert.equal(isThirdParty('connect.facebook.net', 'news.example.com'), true, 'Meta on someone else\'s site');
+  assert.equal(entityOf('amazonaws.com'), null, 'shared hosting is never an entity');
+  assert.equal(isThirdParty('bucket.s3.amazonaws.com', 'www.amazon.com'), true);
+});

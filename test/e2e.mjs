@@ -321,6 +321,21 @@ try {
     await Promise.all([shop.close(), report.page.close(), req.page.close()]);
   }
   {
+    const { page, errors } = await extPage('findings/findings.html', '.tile');
+    const tiles = await page.$$('.tile');
+    const bars = await page.$$('#techniques li');
+    check('Findings: crawl results render (tiles, technique bars, top sites)', tiles.length === 4 && bars.length > 3 && (await page.$$('#top tr')).length > 5 && !errors.length, errors.join('; ') || `${tiles.length} tiles, ${bars.length} bars`);
+    await page.close();
+    const site = await ctx.newPage();
+    await site.goto(SITE + 'fingerprinter.html');
+    await site.waitForTimeout(2500);
+    const tabId = await sw.evaluate(async u => (await chrome.tabs.query({ url: u }))[0].id, SITE + 'fingerprinter.html');
+    const popup = await extPage(`popup/popup.html?tab=${tabId}`, '#compare:not([hidden])');
+    const line = await popup.page.textContent('#compare');
+    check('Popup compares the site with the crawl', /More fingerprinting than \d+% of the top \d+ websites we tested/.test(line), line);
+    await Promise.all([site.close(), popup.page.close()]);
+  }
+  {
     const { page, errors } = await extPage('history/history.html', '#rows tr');
     const followers = await page.$$eval('#bars li', lis => lis.map(li => li.textContent));
     const due = await page.$$eval('td.req', tds => tds.map(td => td.textContent));

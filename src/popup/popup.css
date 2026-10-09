@@ -12,6 +12,7 @@ body { width: 380px; padding: 14px 16px 12px; font-size: 14px; }
 .score small { font-size: 13px; font-weight: 400; color: var(--muted); }
 .label { font-weight: 700; font-size: 17px; line-height: 1.25; }
 .sub { color: var(--muted); font-size: 12.5px; line-height: 1.4; margin-top: 2px; }
+.compare { font-style: italic; }
 
 .meter { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
 .meter span { display: block; height: 100%; width: 0; background: var(--grade, var(--muted)); transition: width .4s; }

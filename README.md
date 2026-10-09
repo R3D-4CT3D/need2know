@@ -12,6 +12,9 @@ data deleted.
 - **Undo it.** Generates a CCPA, GDPR or UK GDPR deletion request with the evidence attached, links
   to the right opt-out pages, and points Californians to the state's one-stop data broker deletion
   platform.
+- **Measure the web.** A crawler runs the extension over the Tranco top sites and reports what
+  they do, and whether protection breaks them. See [docs/findings.md](docs/findings.md); the
+  popup compares each site you visit with those results.
 - **Learn from it.** A Privacy Checkup scores your defenses and shows, side by side, what sites see
   with and without protection. History shows which companies follow you across sites. Evidence
   reports come with a SHA-256 integrity hash.
@@ -35,6 +38,8 @@ npm run serve        # test pages at http://localhost:8080
 npm install          # dev-only: Playwright and FingerprintJS, for the end-to-end test
 npm run test:e2e     # loads the extension into real Chromium and checks every test page
 npm run lint:firefox # Mozilla's add-on linter on the Firefox build
+npm run crawl        # measure the Tranco top sites (about an hour), then:
+npm run crawl:report # regenerate docs/findings.md and the stats the extension ships
 ```
 
 **Chrome, Edge, Brave, Opera:** open `chrome://extensions` (or `edge://extensions`, `brave://extensions`),
@@ -123,9 +128,20 @@ Design details worth knowing:
   so every attempt is still recorded: `page → hooks.js (records) → protection (adds noise) → browser`.
 - **Settings without code generation.** Protection must be configured *synchronously* at
   `document_start`, and content scripts can't be generated at runtime. So each defense is its own
-  file (`content/protect/canvas.js`, `audio.js`, …) and `scripting.registerContentScripts()` injects
-  only the enabled ones, after `core.js` (shared helpers) and before `seal.js` (removes them before
-  any page script runs). Per-site exceptions become `matches` / `excludeMatches`.
+  file (`content/protect/canvas.js`, `audio.js`, `fonts.js`, …) and `scripting.registerContentScripts()`
+  injects only the enabled ones, after `core.js` (shared helpers). `hooks.js`, always last, removes
+  those helpers before any page script runs. Per-site exceptions become `matches` / `excludeMatches`.
+- **Fonts without breaking pages.** A font probe measures text in `"SomeFont", fallback` and
+  compares it with the fallback. On canvas `measureText` and when sizing elements styled with an
+  inline font-family, a family that isn't standard for your OS (and isn't a web font the page
+  loaded) is dropped for that one measurement. Probes see a standard install; rendering never changes.
+- **Web Workers.** Content scripts can't run in workers, and a worker that answers differently from
+  the page exposes the protection. So `hooks.js` starts each dedicated `Worker` from a `blob:` script
+  that runs `worker-prelude.js` (detection, plus the page's protection with the same seed) and then
+  loads the original. Relative URLs (`location`, `importScripts`, `fetch`, XHR…) are re-resolved
+  against the original script, and module workers have early messages held until they've loaded.
+  Only where the page's CSP allows `blob:` workers, which the background reads from response
+  headers; elsewhere workers run untouched.
 - **Blocking follows the same switch.** Vendor blocklists are static rulesets; a dynamic
   `allowAllRequests` rule exempts every page where protection is off, and an `allow` rule covers
   companies the user trusts. GPC's header rule outranks both, so it's sent everywhere.
@@ -150,6 +166,7 @@ Design details worth knowing:
 | `declarativeNetRequest` | To block session recorders and fingerprinting services, and send the GPC header. |
 | `storage` | Settings, per-tab reports and your local history. |
 | `alarms` | To end a pause on time. |
+| `webRequest` | Read-only: to see whether a page's security policy allows Web Worker coverage. Nothing is blocked or changed with it. |
 | `privacy` | Only for WebRTC IP leak protection, which stays off until you turn it on. |
 
 No data leaves your browser. Firefox's manifest declares `data_collection_permissions: none`.
@@ -214,7 +231,8 @@ No data leaves your browser. Firefox's manifest declares `data_collection_permis
 - **Very early fingerprinting gets a random seed** for that page load (see *A secret seed* above).
   That's more private, but the site sees a different you on every reload.
 - **Fraud and bot detection isn't blocked by default** because banks and checkouts depend on it.
-- **Web Workers aren't watched or protected.** Content scripts can't run inside workers, so fingerprinting done
+- **SharedWorker and ServiceWorker aren't covered,** and neither are dedicated workers on pages whose
+  CSP forbids `blob:` workers (common on large sites). Wrapping those would change or break them. Content scripts can't run inside workers, so fingerprinting done
   with `OffscreenCanvas` in a worker goes unseen.
 - **iframe escapes are verified in Chromium only.** The escape tests (fresh `about:blank`, `frames[i]`,
   `srcdoc`, `blob:`, `data:`) all pass in Chromium. Firefox hasn't been tested in an automated way:
@@ -240,8 +258,8 @@ No data leaves your browser. Firefox's manifest declares `data_collection_permis
 - [x] Browser-specific "How to stop this" advice
 - [x] Deletion requests (CCPA, US state laws, GDPR, UK GDPR) with evidence attached
 - [x] Privacy Checkup, typing warning, cross-site tracker view, evidence reports
+- [x] Font protection, Web Worker coverage, a real-world crawl with findings
 - [ ] Automated Firefox end-to-end test (Selenium with geckodriver, or `web-ext run`)
-- [ ] Watch and protect Web Workers
 - [ ] Publish to the Chrome Web Store, Microsoft Edge Add-ons and Firefox Add-ons (addons.mozilla.org)
 
 ## Project layout
@@ -251,14 +269,17 @@ src/
   manifest.json        base manifest (Chromium); Firefox variant is generated
   background.js        per-tab state, badge, history, settings → scripts and network rules, seeds
   content/hooks.js     detection: API wrappers, runs in the page's world
-  content/protect/     protection: core.js, one file per defense, seal.js (run before hooks.js)
+  content/protect/     protection: core.js, then one file per defense (run before hooks.js)
+  content/worker-prelude.js   runs inside Web Workers; inlined into hooks.js at build time
   content/gpc.js       Global Privacy Control flag
   content/bridge.js    relays to background, seed handoff, typing warning (isolated world)
   shared/              scoring, techniques, vendors, plans, advice, letters, evidence, insights
   popup/               toolbar popup
-  checkup/ history/ options/ request/ report/   full-page views
+  checkup/ findings/ history/ options/ request/ report/   full-page views
+  data/crawl-stats.json   crawl summary the popup and Findings page use
   icons/               generated by scripts/make-icons.mjs
-scripts/               build, icon generator, two-origin test server
+scripts/               build, icons, two-origin test server, crawler and crawl report
+data/                  raw crawl results; docs/findings.md is generated from them
 test/                  node:test unit tests, e2e.mjs (Playwright), pages/ test sites
 ```
 

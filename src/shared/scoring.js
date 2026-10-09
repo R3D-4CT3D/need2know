@@ -56,6 +56,7 @@ export function buildReport(state) {
   const pageHost = hostOf(url);
   const pageNoQuery = url.replace(/[?#].*$/, '');
   const { merged, hosts, failed, frameUrls, protect } = mergeFrames(state?.frames);
+  for (const h of state?.blocked ?? []) failed.add(h); // seen blocked by the background
   const items = [];
 
   const describe = (src, count) => {

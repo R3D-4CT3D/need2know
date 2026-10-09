@@ -1,3 +1,5 @@
+import { entityOf } from './entities.js';
+
 // "Same site" means same registrable domain (eTLD+1): news.example.com and cdn.example.com
 // are one company, example.com and tracker.net are not. A full Public Suffix List is ~250 KB,
 // so this keeps the common multi-part suffixes and hosting platforms where each subdomain
@@ -25,6 +27,12 @@ export function siteOf(host) {
   return MULTI_PART.has(lastTwo) ? parts.slice(-3).join('.') : lastTwo;
 }
 
+// A third party is a different site that also isn't owned by the same company
+// (gstatic.com on google.com is Google's own code).
 export function isThirdParty(host, pageHost) {
-  return !!host && !!pageHost && siteOf(host) !== siteOf(pageHost);
+  if (!host || !pageHost) return false;
+  const a = siteOf(host), b = siteOf(pageHost);
+  if (a === b) return false;
+  const owner = entityOf(a);
+  return !owner || owner !== entityOf(b);
 }

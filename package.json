@@ -1,6 +1,6 @@
 {
   "name": "need2know",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "What Sites See: a cross-browser extension that catches websites fingerprinting you in real time.",
   "type": "module",
@@ -12,7 +12,9 @@
     "serve": "node scripts/serve.mjs",
     "test": "node --test \"test/*.test.js\"",
     "test:e2e": "node test/e2e.mjs",
-    "lint:firefox": "npm run build:firefox && npx -y web-ext lint --source-dir dist/firefox"
+    "lint:firefox": "npm run build:firefox && npx -y web-ext lint --source-dir dist/firefox",
+    "crawl": "node scripts/crawl.mjs",
+    "crawl:report": "node scripts/crawl-report.mjs"
   },
   "engines": {
     "node": ">=22"

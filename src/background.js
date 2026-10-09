@@ -134,6 +134,19 @@ api.webRequest?.onHeadersReceived.addListener(d => {
   frameCsp.set(`${d.tabId}:${d.frameId}`, allowsBlobWorkers(d.responseHeaders ?? []));
 }, { urls: ['<all_urls>'], types: ['main_frame', 'sub_frame'] }, ['responseHeaders']);
 
+// Requests this extension's network rules blocked. A blocked <script> fires an error event the
+// bridge sees, but a blocked fetch, XHR or beacon doesn't, so read it here instead.
+const BLOCKED = /ERR_BLOCKED_BY_CLIENT|NS_ERROR_ABORT|blocked/i;
+api.webRequest?.onErrorOccurred.addListener(d => {
+  if (d.tabId < 0 || d.type === 'main_frame' || !BLOCKED.test(d.error)) return;
+  const st = tabs.get(d.tabId);
+  if (!st) return;
+  let host;
+  try { host = new URL(d.url).hostname; } catch { return; }
+  st.blocked ??= [];
+  if (!st.blocked.includes(host) && st.blocked.length < 300) { st.blocked.push(host); schedule(d.tabId); }
+}, { urls: ['<all_urls>'] });
+
 /* ---------- per-site noise seeds ---------- */
 // One random secret per browser session; each site's seed is a hash of the secret and the
 // top-level site. Same site → same seed for the whole session; different sites can't be linked.
@@ -210,7 +223,7 @@ function receive(msg, sender, tabId, settings) {
     if (sender.frameId !== 0) return;
     // Which defenses this page loaded with, so the report doesn't claim more than it got.
     const defenses = Object.keys(settings.defenses).filter(k => settings.defenses[k]);
-    tabs.set(tabId, { url: String(msg.url), doc: msg.doc, incognito: !!sender.tab.incognito, defenses, frames: {} });
+    tabs.set(tabId, { url: String(msg.url), doc: msg.doc, incognito: !!sender.tab.incognito, defenses, frames: {}, blocked: [] });
   } else if (msg.type === 'snap') {
     const st = tabs.get(tabId);
     if (!st) return;

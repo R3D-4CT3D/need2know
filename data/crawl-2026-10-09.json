@@ -1,0 +1,6598 @@
+{
+  "meta": {
+    "date": "2026-10-09",
+    "tranco": "PY35J",
+    "candidatesTried": 180,
+    "sites": 100,
+    "extensionVersion": "0.3.0",
+    "browser": "Chromium 151.0.0.0",
+    "concurrency": 4,
+    "method": "Homepage, wait for load + 3 s, scroll to bottom, wait 2.5 s. Pass 1 detection only; pass 2 with protection on everywhere."
+  },
+  "sites": [
+    {
+      "rank": 1,
+      "domain": "google.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.google.com/",
+      "title": "Google",
+      "elements": 586,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 587,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "domain": "cloudflare.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.cloudflare.com/",
+      "title": "Cloudflare: Build for the agent era",
+      "elements": 3743,
+      "score": 39,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 13,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 18,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 39,
+        "elements": 3746,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 4,
+      "domain": "facebook.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.facebook.com/",
+      "title": "Facebook",
+      "elements": 384,
+      "score": 74,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 11,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 86,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 6,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 74,
+        "elements": 384,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 5,
+      "domain": "amazonaws.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://aws.amazon.com/",
+      "title": "Cloud Computing Services - Amazon Web Services (AWS)",
+      "elements": 2770,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 18,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 14,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 31,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 8,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 2768,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 8,
+      "domain": "microsoft.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.microsoft.com/en-us",
+      "title": "Microsoft – AI, Cloud, Productivity, Computing, Gaming & Apps",
+      "elements": 1366,
+      "score": 66,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 13,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity",
+        "Contentsquare"
+      ],
+      "thirdPartySites": 16,
+      "pageErrors": [
+        "Cannot read properties of undefined (reading 'disconnect')",
+        "Cannot read properties of undefined (reading 'querySelectorAllDeep')"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 56,
+        "elements": 1366,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "active"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 9,
+      "domain": "apple.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.apple.com/",
+      "title": "Apple",
+      "elements": 2080,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 2080,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 10,
+      "domain": "youtube.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.youtube.com/",
+      "title": "YouTube",
+      "elements": 2314,
+      "score": 39,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 18,
+          "thirdParty": false
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "keyboard-layout",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 39,
+        "elements": 2313,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 11,
+      "domain": "instagram.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.instagram.com/",
+      "title": "Instagram",
+      "elements": 515,
+      "score": 29,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 12,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 19,
+        "elements": 517,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 12,
+      "domain": "fbcdn.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.facebook.com/",
+      "title": "Facebook",
+      "elements": 384,
+      "score": 74,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 11,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 86,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 6,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 74,
+        "elements": 384,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 13,
+      "domain": "mail.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://mail.ru/",
+      "title": "Mail: Почта, Облако, Календарь, Заметки, Покупки — сервисы для работы и жизни",
+      "elements": 5312,
+      "score": 98,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 25,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 11,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 51,
+        "elements": 5642,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 16,
+      "domain": "twitter.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://x.com/",
+      "title": "X. It’s what’s happening / X",
+      "elements": 432,
+      "score": 94,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 22,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 163,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 25,
+          "thirdParty": false
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 94,
+        "elements": 419,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 17,
+      "domain": "linkedin.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.linkedin.com/",
+      "title": "LinkedIn: Log In or Sign Up",
+      "elements": 823,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 195,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 8,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 37,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 832,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 18,
+      "domain": "dzen.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://dzen.ru/",
+      "title": "Дзен — главная новостная информационная платформа, которая помогает миллионам людей узнавать, что происходит в мире.",
+      "elements": 3958,
+      "score": 98,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 54,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 27,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 10,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 51,
+        "elements": 3945,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 22,
+      "domain": "office.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://m365.cloud.microsoft/",
+      "title": "Microsoft 365 - Sign into Copilot",
+      "elements": 1030,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 6,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 35,
+        "elements": 1025,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 25,
+      "domain": "live.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook?deeplink=%2Fmail%2F&sdf=0&sessionId=51f99285-c50b-4b6d-bab8-75af3f912ef7",
+      "title": "Microsoft Outlook Personal Email and Calendar | Microsoft 365",
+      "elements": 7430,
+      "score": 66,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 12,
+      "pageErrors": [
+        "Identifier 'OneCloudUtil' has already been declared",
+        "Identifier 'LocalStorageUtil' has already been declared",
+        "describe is not defined"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 46,
+        "elements": 7429,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 26,
+      "domain": "azure.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://azure.microsoft.com/en-us",
+      "title": "Cloud Computing Services | Microsoft Azure",
+      "elements": 3435,
+      "score": 57,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 14,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 20,
+      "pageErrors": [
+        "describe is not defined",
+        "Cannot read properties of undefined (reading 'includes')"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 57,
+        "elements": 3434,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 27,
+      "domain": "amazon.com",
+      "ok": true,
+      "status": 202,
+      "url": "https://www.amazon.com/",
+      "title": "Amazon.com. Spend less. Smile more.",
+      "elements": 2907,
+      "score": 68,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 5,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 19,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 46,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 68,
+        "elements": 2919,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 29,
+      "domain": "github.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://github.com/",
+      "title": "GitHub · Change is constant. GitHub keeps you ahead. · GitHub · GitHub",
+      "elements": 1813,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1813,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 31,
+      "domain": "wikipedia.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.wikipedia.org/",
+      "title": "Wikipedia",
+      "elements": 1196,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1196,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 32,
+      "domain": "whatsapp.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.whatsapp.com/",
+      "title": "WhatsApp | Secure and Reliable Free Private Messaging and Calling",
+      "elements": 1419,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1419,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 33,
+      "domain": "bing.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.bing.com/?toWww=1&redig=1ABAAD419B4F47DA89CD14E57A787525",
+      "title": "Search - Microsoft Bing",
+      "elements": 682,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [
+        "_w is not defined"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 644,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 36,
+      "domain": "fastly.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.fastly.com/",
+      "title": "Powering the best of the internet | Fastly",
+      "elements": 1823,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 33,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 1663,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 38,
+      "domain": "cloud.microsoft",
+      "ok": true,
+      "status": 200,
+      "url": "https://m365.cloud.microsoft/",
+      "title": "Microsoft 365 - Sign into Copilot",
+      "elements": 1030,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 6,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 35,
+        "elements": 1025,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 42,
+      "domain": "doubleclick.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://marketingplatform.google.com/about/enterprise/",
+      "title": "Enterprise Advertising & Analytics Solutions - Google Marketing Platform",
+      "elements": 830,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 830,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 44,
+      "domain": "gandi.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.gandi.net/en-US",
+      "title": "Gandi.net - Gandi.net: Domain Names, Web Hosting, SSL Certificates and Emails",
+      "elements": 1637,
+      "score": 10,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [
+        "widget.configure is not a function"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 10,
+        "elements": 1637,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 46,
+      "domain": "netflix.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.netflix.com/",
+      "title": "Netflix - Watch TV Shows Online, Watch Movies Online",
+      "elements": 1087,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 15,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 1087,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 47,
+      "domain": "youtu.be",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.youtube.com/",
+      "title": "YouTube",
+      "elements": 2313,
+      "score": 39,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 18,
+          "thirdParty": false
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "keyboard-layout",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 39,
+        "elements": 2313,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 48,
+      "domain": "x.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://x.com/",
+      "title": "X. It’s what’s happening / X",
+      "elements": 432,
+      "score": 94,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 22,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 163,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 25,
+          "thirdParty": false
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 94,
+        "elements": 419,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 49,
+      "domain": "wordpress.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://wordpress.org/",
+      "title": "Blog Tool, Publishing Platform, and CMS – WordPress.org",
+      "elements": 666,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 666,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 50,
+      "domain": "skype.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://teams.live.com/free",
+      "title": "Free Online Meetings & Video Calls | Microsoft Teams",
+      "elements": 237,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 25,
+        "elements": 237,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 51,
+      "domain": "digicert.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.digicert.com/",
+      "title": "TLS/SSL Certificate Authority | Leader in Digital Trust | DigiCert",
+      "elements": 1352,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 183,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 32,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 3,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 28,
+        "elements": 1351,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 52,
+      "domain": "icloud.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.icloud.com/",
+      "title": "iCloud",
+      "elements": 163,
+      "score": 2,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 2,
+        "elements": 163,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 53,
+      "domain": "pinterest.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.pinterest.com/",
+      "title": "Pinterest",
+      "elements": 1305,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 159,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 16,
+          "thirdParty": false
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 1305,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 54,
+      "domain": "googledomains.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://domains.google/",
+      "title": "Google Domains",
+      "elements": 70,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 70,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 55,
+      "domain": "cloudflare.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://cloudflare.net/home/default.aspx",
+      "title": "Cloudflare, Inc. - Investor Relations",
+      "elements": 766,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 6,
+          "thirdParty": true
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 63,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 6,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "keyboard-layout",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 8,
+      "pageErrors": [],
+      "protected": {
+        "ok": false,
+        "score": 100,
+        "elements": 47,
+        "newErrors": [],
+        "possibleBreakage": [
+          "no longer looked like a page"
+        ],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 56,
+      "domain": "googlesyndication.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.google.com/",
+      "title": "Google",
+      "elements": 587,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 586,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 57,
+      "domain": "whatsapp.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.whatsapp.com/",
+      "title": "WhatsApp | Secure and Reliable Free Private Messaging and Calling",
+      "elements": 1419,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1419,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 58,
+      "domain": "tiktok.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.tiktok.com/",
+      "title": "TikTok - Make Your Day",
+      "elements": 821,
+      "score": 86,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 14,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 90,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 9,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 67,
+          "thirdParty": false
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 4,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 3,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 86,
+        "elements": 801,
+        "newErrors": [
+          "a.init is not a function"
+        ],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 61,
+      "domain": "yahoo.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.yahoo.com/",
+      "title": "Yahoo | Mail, Weather, Search, Politics, News, Finance, Sports & Videos",
+      "elements": 3310,
+      "score": 47,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 60,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 8,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 8,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 101,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 37,
+        "elements": 3090,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 62,
+      "domain": "adobe.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.adobe.com/",
+      "title": "Adobe: Creative, marketing and document management solutions",
+      "elements": 2329,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 1951,
+          "thirdParty": true
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 23,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "fraud-vendor",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 14,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 6,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Forter"
+      ],
+      "thirdPartySites": 6,
+      "pageErrors": [
+        "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'blob:https://www.adobe.com/7cdbe2bd-c485-444e-861f-69963bec8f31' failed to load."
+      ],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 2634,
+        "newErrors": [
+          "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'blob:https://www.adobe.com/4f26ac56-e981-4819-b3be-4fe877b11ec7' failed to load."
+        ],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "fraud-vendor",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 65,
+      "domain": "endpoints.news",
+      "ok": true,
+      "status": 200,
+      "url": "https://endpoints.news/",
+      "title": "Endpoints News – Biotech and pharma business news, with a focus on the science, people and money that drive the industry",
+      "elements": 1686,
+      "score": 37,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 12,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 1687,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 66,
+      "domain": "roblox.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.roblox.com/",
+      "title": "Play Free Online Games on Roblox - Sign Up to Play!",
+      "elements": 380,
+      "score": 10,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 21,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 10,
+        "elements": 381,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 68,
+      "domain": "wa.me",
+      "ok": true,
+      "status": 200,
+      "url": "https://api.whatsapp.com/",
+      "title": "Open WhatsApp",
+      "elements": 842,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 842,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 69,
+      "domain": "spotify.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://open.spotify.com/",
+      "title": "Spotify - Web Player: Music for everyone",
+      "elements": 2937,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 10,
+      "pageErrors": [
+        "Uncaught (in promise) undefined"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 2937,
+        "newErrors": [
+          "undefined"
+        ],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 70,
+      "domain": "zoom.us",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.zoom.com/",
+      "title": "One platform to connect | Zoom",
+      "elements": 2013,
+      "score": 57,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 30,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Contentsquare"
+      ],
+      "thirdPartySites": 44,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 57,
+        "elements": 1975,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 71,
+      "domain": "myfritz.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://sso.myfritz.net/",
+      "title": "Logging into MyFRITZ!Net",
+      "elements": 114,
+      "score": 78,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 195,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 8,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 15,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 78,
+        "elements": 114,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 72,
+      "domain": "msn.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.msn.com/",
+      "title": "MSN | Personalized News, Top Headlines, Live Updates and more",
+      "elements": 132,
+      "score": 22,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 28,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 61,
+        "elements": 125,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 77,
+      "domain": "nginx.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://nginx.org/",
+      "title": "nginx",
+      "elements": 162,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 162,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 78,
+      "domain": "ntp.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.ntp.org/",
+      "title": "NTP: Network Time Protocol",
+      "elements": 184,
+      "score": 56,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 8,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 46,
+        "elements": 183,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 79,
+      "domain": "qq.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.qq.com/",
+      "title": "腾讯网",
+      "elements": 3762,
+      "score": 66,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 9,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 8,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 17,
+          "thirdParty": false
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 10,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 12,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 66,
+        "elements": 3437,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 80,
+      "domain": "opera.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.opera.com/",
+      "title": "Opera Web Browser | Faster, Safer, Smarter | Opera",
+      "elements": 776,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 9,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 41,
+        "elements": 775,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 82,
+      "domain": "workers.dev",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.cloudflare.com/products/workers/",
+      "title": "Cloudflare Workers - Global Serverless Functions Platform",
+      "elements": 2866,
+      "score": 22,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 13,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 22,
+        "elements": 2870,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 84,
+      "domain": "yandex.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://ya.ru/",
+      "title": "Яндекс — быстрый поиск в интернете",
+      "elements": 319,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 25,
+        "elements": 259,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 85,
+      "domain": "vimeo.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://vimeo.com/",
+      "title": "Vimeo - All-in-One Video Platform",
+      "elements": 4100,
+      "score": 28,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 106,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 74,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 19,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 28,
+        "elements": 4099,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 86,
+      "domain": "f5.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.f5.com/",
+      "title": "Hybrid Multicloud App Security & Delivery for the AI Era | F5",
+      "elements": 1413,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node."
+      ],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1439,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 87,
+      "domain": "chatgpt.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://chatgpt.com/",
+      "title": "ChatGPT: Chat, Work, Create & Code with AI",
+      "elements": 874,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 874,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 89,
+      "domain": "cloudflare-dns.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://one.one.one.one/dns/",
+      "title": "1.1.1.1 — One of the Internet’s Fastest, Privacy-First DNS Resolver",
+      "elements": 1111,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 1111,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 91,
+      "domain": "mozilla.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.mozilla.org/en-US/",
+      "title": "Mozilla - Internet for people, not profit (US)",
+      "elements": 1142,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 1142,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 92,
+      "domain": "nginx.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.f5.com/products/nginx#next-steps",
+      "title": "NGINX | F5",
+      "elements": 1220,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Uncaught Another translator detected, we let the user use it",
+        "Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.",
+        "Uncaught Another translator script may be running, stopping this one"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1239,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 95,
+      "domain": "blogspot.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.blogger.com/about/?bpli=1",
+      "title": "Blogger.com - Create a unique and beautiful blog easily.",
+      "elements": 289,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 289,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 96,
+      "domain": "sentry.io",
+      "ok": true,
+      "status": 200,
+      "url": "https://sentry.io/welcome/",
+      "title": "Application Performance Monitoring & Error Tracking Software | Sentry",
+      "elements": 3385,
+      "score": 10,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 10,
+        "elements": 3385,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 97,
+      "domain": "yandex.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://dzen.ru/?yredirect=true",
+      "title": "Дзен — главная новостная информационная платформа, которая помогает миллионам людей узнавать, что происходит в мире.",
+      "elements": 4613,
+      "score": 61,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 57,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 25,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 9,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 51,
+        "elements": 3948,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 99,
+      "domain": "openai.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://openai.com/",
+      "title": "OpenAI | Research & Deployment",
+      "elements": 1070,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 16,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [
+        "Unexpected token '<', \"<html>\n  <\"... is not valid JSON"
+      ],
+      "protected": {
+        "ok": false,
+        "score": 100,
+        "elements": 34,
+        "newErrors": [],
+        "possibleBreakage": [
+          "no longer looked like a page"
+        ],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 101,
+      "domain": "b-cdn.net",
+      "ok": true,
+      "status": 200,
+      "url": "https://bunny.net/",
+      "title": "bunny.net - The Global Edge Platform that truly Hops",
+      "elements": 1995,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [
+        "Minified React error #425; visit https://reactjs.org/docs/error-decoder.html?invariant=425 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Minified React error #423; visit https://reactjs.org/docs/error-decoder.html?invariant=423 for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 1995,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 102,
+      "domain": "yuga.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://yuga.com/",
+      "title": "Welcome to Yuga Labs, Home of BAYC, MAYC, Otherside",
+      "elements": 180,
+      "score": 28,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 8,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 18,
+        "elements": 617,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 103,
+      "domain": "wordpress.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://wordpress.com/",
+      "title": "WordPress.com: Everything You Need to Build Your Website",
+      "elements": 1561,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 10,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 1561,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 105,
+      "domain": "t.me",
+      "ok": true,
+      "status": 200,
+      "url": "https://telegram.org/",
+      "title": "Telegram Messenger",
+      "elements": 306,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 306,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 106,
+      "domain": "reddit.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.reddit.com/?solution=ba79c3bc7b1ba2f8ba79c3bc7b1ba2f8&js_challenge=1&jsc_token=2824be10929bdc604753c70a67a1c33175ca8bf3bed7f9b0a8f5b9bf61bec433&jsc_orig_r=",
+      "title": "Reddit - The heart of the internet",
+      "elements": 2771,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 14,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 6,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 51,
+        "elements": 2770,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 108,
+      "domain": "nic.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.nic.ru/",
+      "title": "Корпоративный регистратор доменов Руцентр",
+      "elements": 920,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 3,
+          "thirdParty": false
+        },
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 159,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 18,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 11,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 885,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 109,
+      "domain": "samsung.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.samsung.com/us/",
+      "title": "Samsung US | Mobile | TV | Home Electronics | Home Appliances | Samsung US",
+      "elements": 3871,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 6,
+      "pageErrors": [
+        "Cannot read properties of undefined (reading 'ECID')",
+        "poc_gtag is not defined"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 3871,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 111,
+      "domain": "amazonvideo.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.primevideo.com/",
+      "title": "Prime Video: Watch movies, TV shows, sports, and live TV",
+      "elements": 5173,
+      "score": 10,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 19,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 10,
+        "elements": 5100,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 113,
+      "domain": "ui.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://ui.com/",
+      "title": "UniFi - Rethinking IT - Ubiquiti",
+      "elements": 1573,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 7,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 1581,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 114,
+      "domain": "windows.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.microsoft.com/en-us/windows/",
+      "title": "Experience the Windows difference with Windows 11 OS, Laptops, PCs & Apps | Microsoft Windows",
+      "elements": 1366,
+      "score": 66,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 46,
+        "elements": 1367,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 115,
+      "domain": "europa.eu",
+      "ok": true,
+      "status": 200,
+      "url": "https://european-union.europa.eu/index_en",
+      "title": "Your gateway to the EU, News, Highlights | European Union",
+      "elements": 946,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 946,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 116,
+      "domain": "epicgames.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://store.epicgames.com/",
+      "title": "Epic Games Store | Download & Play PC Games, Mods, DLC & More – Epic Games",
+      "elements": 2917,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 36,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": false,
+        "score": 100,
+        "elements": 43,
+        "newErrors": [],
+        "possibleBreakage": [
+          "no longer looked like a page"
+        ],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 118,
+      "domain": "bit.ly",
+      "ok": true,
+      "status": 200,
+      "url": "https://bitly.com/",
+      "title": "Bitly | Short URLs, QR Codes, and More",
+      "elements": 2404,
+      "score": 32,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 13,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 9,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 13,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 32,
+        "elements": 2404,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 119,
+      "domain": "triplinkintl.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.triplinkintl.com/",
+      "title": "Virtual commercial card for global payments | TripLink",
+      "elements": 269,
+      "score": 12,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 271,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 123,
+      "domain": "outlook.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook?deeplink=%2Fmail%2F&sdf=0&sessionId=5b8727a6-f7ed-4851-b485-8d6e0ebf6131",
+      "title": "Microsoft Outlook Personal Email and Calendar | Microsoft 365",
+      "elements": 7424,
+      "score": 66,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 11,
+      "pageErrors": [
+        "Identifier 'OneCloudUtil' has already been declared",
+        "Identifier 'LocalStorageUtil' has already been declared",
+        "describe is not defined"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 46,
+        "elements": 7429,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 125,
+      "domain": "reg.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.reg.ru/",
+      "title": "Регистрация доменов РФ/RU у аккредитованного регистратора доменов | Недорогой хостинг и дешевые домены | Рег.ру",
+      "elements": 1422,
+      "score": 35,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 2,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 35,
+        "elements": 1510,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 128,
+      "domain": "google-analytics.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://marketingplatform.google.com/about/analytics/",
+      "title": "Analytics Tools & Solutions for Your Business - Google Analytics",
+      "elements": 826,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 826,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 129,
+      "domain": "github.io",
+      "ok": true,
+      "status": 200,
+      "url": "https://docs.github.com/en/pages",
+      "title": "GitHub Pages documentation - GitHub Docs",
+      "elements": 533,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 533,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 130,
+      "domain": "dropbox.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.dropbox.com/",
+      "title": "Dropbox: Secure cloud storage, file sharing, and more",
+      "elements": 1813,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 159,
+          "thirdParty": true
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 40,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        },
+        {
+          "id": "webrtc",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 32,
+      "pageErrors": [
+        "Invalid or unexpected token",
+        "xtp.init is not a function"
+      ],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 1810,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "webrtc",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 131,
+      "domain": "intuit.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.intuit.com/",
+      "title": "Intuit®: Outdo your financial goals—all in one place",
+      "elements": 1361,
+      "score": 41,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 15,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "FullStory"
+      ],
+      "thirdPartySites": 27,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 41,
+        "elements": 1376,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "active"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 132,
+      "domain": "apache.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://apache.org/",
+      "title": "Welcome to The Apache Software Foundation | Apache Software Foundation",
+      "elements": 659,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 1,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 659,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 134,
+      "domain": "snapchat.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.snapchat.com/",
+      "title": "Snapchat - Say It In A Snap",
+      "elements": 534,
+      "score": 6,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [
+        "Minified React error #425; visit https://reactjs.org/docs/error-decoder.html?invariant=425 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+        "Minified React error #422; visit https://reactjs.org/docs/error-decoder.html?invariant=422 for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 534,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 135,
+      "domain": "lencr.org",
+      "ok": true,
+      "status": 200,
+      "url": "https://letsencrypt.org/docs/lencr.org/",
+      "title": "lencr.org - Let's Encrypt",
+      "elements": 254,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 3,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 254,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    },
+    {
+      "rank": 138,
+      "domain": "nih.gov",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.nih.gov/",
+      "title": "National Institutes of Health (NIH) |",
+      "elements": 619,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 19,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Crazy Egg"
+      ],
+      "thirdPartySites": 8,
+      "pageErrors": [],
+      "protected": {
+        "ok": false,
+        "score": 6,
+        "elements": 46,
+        "newErrors": [],
+        "possibleBreakage": [
+          "no longer looked like a page"
+        ],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 139,
+      "domain": "vk.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://vk.ru/",
+      "title": "VK | Welcome!",
+      "elements": 280,
+      "score": 72,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 2,
+          "thirdParty": false
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 12,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 3,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 4,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 52,
+        "elements": 278,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 140,
+      "domain": "discord.gg",
+      "ok": true,
+      "status": 200,
+      "url": "https://discord.com/",
+      "title": "Discord - Group Chat That’s All Fun & Games",
+      "elements": 1197,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 21,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 11,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 6,
+        "elements": 1195,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 143,
+      "domain": "kaspersky.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://usa.kaspersky.com/",
+      "title": "Kaspersky Cyber Security Solutions for Home and Business | Kaspersky",
+      "elements": 3007,
+      "score": 61,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 10,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 9,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 31,
+        "elements": 3006,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 147,
+      "domain": "afternic.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.afternic.com/",
+      "title": "Sell Domains | Buy Domains | Park Domains - Afternic",
+      "elements": 588,
+      "score": 41,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 9,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [
+        "FullStory"
+      ],
+      "thirdPartySites": 7,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 41,
+        "elements": 585,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 150,
+      "domain": "adobe.io",
+      "ok": true,
+      "status": 200,
+      "url": "https://developer.adobe.com/",
+      "title": "The most memorable digital experiences are unleashed by developer creativity",
+      "elements": 668,
+      "score": 51,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 19,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 7,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Contentsquare"
+      ],
+      "thirdPartySites": 27,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 41,
+        "elements": 667,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 153,
+      "domain": "unity3d.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://unity.com/",
+      "title": "Unity: Develop, Deploy, and Grow | The World's Leading Game Engine",
+      "elements": 2171,
+      "score": 26,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 16,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 27,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 26,
+        "elements": 2175,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 154,
+      "domain": "gravatar.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://gravatar.com/",
+      "title": "Your Free Avatar, Profile, and Link In Bio | Gravatar",
+      "elements": 594,
+      "score": 16,
+      "grade": "low",
+      "techniques": [
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 5,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 16,
+        "elements": 594,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 155,
+      "domain": "criteo.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.criteo.com/",
+      "title": "The Global Commerce Intelligence Platform",
+      "elements": 2019,
+      "score": 57,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 8,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Microsoft Clarity"
+      ],
+      "thirdPartySites": 55,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 57,
+        "elements": 2020,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 156,
+      "domain": "tumblr.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.tumblr.com/",
+      "title": "Tumblr",
+      "elements": 7597,
+      "score": 37,
+      "grade": "moderate",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 28,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 5,
+          "thirdParty": true
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 78,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 37,
+        "elements": 7595,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 157,
+      "domain": "nytimes.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.nytimes.com/",
+      "title": "The New York Times - Breaking News, US News, World News and Videos",
+      "elements": 6877,
+      "score": 73,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 36,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 12,
+          "thirdParty": true
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 6,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "keyboard-layout",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "voices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 8,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [],
+      "thirdPartySites": 61,
+      "pageErrors": [],
+      "protected": {
+        "ok": false,
+        "score": 100,
+        "elements": 9,
+        "newErrors": [],
+        "possibleBreakage": [
+          "no longer looked like a page"
+        ],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "fraud-vendor",
+            "status": "active"
+          },
+          {
+            "id": "voices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "keyboard-layout",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          },
+          {
+            "id": "canvas-read",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 161,
+      "domain": "mts.ru",
+      "ok": true,
+      "status": 200,
+      "url": "https://moskva.mts.ru/personal",
+      "title": "МТС - связь и экосистема цифровых сервисов - Частным клиентам | Официальный сайт МТС - Москва и Московская область",
+      "elements": 4151,
+      "score": 100,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 3,
+          "thirdParty": false
+        },
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        },
+        {
+          "id": "font-probe",
+          "status": "active",
+          "count": 159,
+          "thirdParty": false
+        },
+        {
+          "id": "audio-fp",
+          "status": "active",
+          "count": 3,
+          "thirdParty": true
+        },
+        {
+          "id": "webgl-gpu",
+          "status": "active",
+          "count": 6,
+          "thirdParty": true
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 17,
+          "thirdParty": true
+        },
+        {
+          "id": "media-devices",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "storage-estimate",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": true
+        }
+      ],
+      "vendors": [
+        "Yandex Metrica"
+      ],
+      "thirdPartySites": 7,
+      "pageErrors": [
+        "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'blob:https://moskva.mts.ru/63691e09-aace-4277-b794-e2e31fdcac82' failed to load."
+      ],
+      "protected": {
+        "ok": true,
+        "score": 100,
+        "elements": 4141,
+        "newErrors": [
+          "Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'blob:https://moskva.mts.ru/de6b6a05-f914-4d7d-9302-8fc5d2402c0c' failed to load."
+        ],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "canvas-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "font-probe",
+            "status": "neutralized"
+          },
+          {
+            "id": "audio-fp",
+            "status": "neutralized"
+          },
+          {
+            "id": "webgl-gpu",
+            "status": "neutralized"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "media-devices",
+            "status": "neutralized"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          },
+          {
+            "id": "storage-estimate",
+            "status": "active"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 163,
+      "domain": "webex.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://www.webex.com/",
+      "title": "Webex by Cisco | AI-Powered Collaboration, Customer Experience & Devices",
+      "elements": 1958,
+      "score": 84,
+      "grade": "heavy",
+      "techniques": [
+        {
+          "id": "session-replay",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-fp",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        },
+        {
+          "id": "hw-sweep",
+          "status": "active",
+          "count": 20,
+          "thirdParty": true
+        },
+        {
+          "id": "key-listen",
+          "status": "active",
+          "count": 11,
+          "thirdParty": true
+        },
+        {
+          "id": "battery",
+          "status": "active",
+          "count": 4,
+          "thirdParty": true
+        },
+        {
+          "id": "client-hints",
+          "status": "active",
+          "count": 2,
+          "thirdParty": true
+        },
+        {
+          "id": "canvas-read",
+          "status": "active",
+          "count": 1,
+          "thirdParty": false
+        }
+      ],
+      "vendors": [
+        "Hotjar",
+        "Contentsquare"
+      ],
+      "thirdPartySites": 42,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 57,
+        "elements": 1957,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": [
+          {
+            "id": "session-replay",
+            "status": "blocked"
+          },
+          {
+            "id": "hw-sweep",
+            "status": "partial"
+          },
+          {
+            "id": "key-listen",
+            "status": "active"
+          },
+          {
+            "id": "battery",
+            "status": "neutralized"
+          },
+          {
+            "id": "client-hints",
+            "status": "neutralized"
+          }
+        ]
+      }
+    },
+    {
+      "rank": 165,
+      "domain": "example.com",
+      "ok": true,
+      "status": 200,
+      "url": "https://example.com/",
+      "title": "Example Domain",
+      "elements": 22,
+      "score": 0,
+      "grade": "none",
+      "techniques": [],
+      "vendors": [],
+      "thirdPartySites": 0,
+      "pageErrors": [],
+      "protected": {
+        "ok": true,
+        "score": 0,
+        "elements": 22,
+        "newErrors": [],
+        "possibleBreakage": [],
+        "techniques": []
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "rank": 3,
+      "domain": "gstatic.com",
+      "status": 404
+    },
+    {
+      "rank": 6,
+      "domain": "akamai.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://akamai.net/"
+    },
+    {
+      "rank": 7,
+      "domain": "googleapis.com",
+      "status": 404
+    },
+    {
+      "rank": 14,
+      "domain": "ezviz7.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://ezviz7.com/"
+    },
+    {
+      "rank": 15,
+      "domain": "domaincontrol.com",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at https://domaincontrol.com/"
+    },
+    {
+      "rank": 19,
+      "domain": "akamaiedge.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://akamaiedge.net/"
+    },
+    {
+      "rank": 20,
+      "domain": "googlevideo.com",
+      "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://googlevideo.com/"
+    },
+    {
+      "rank": 21,
+      "domain": "googletagmanager.com",
+      "status": 404
+    },
+    {
+      "rank": 23,
+      "domain": "akadns.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://akadns.net/"
+    },
+    {
+      "rank": 24,
+      "domain": "hicloudcam.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://hicloudcam.com/"
+    },
+    {
+      "rank": 28,
+      "domain": "gtld-servers.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://gtld-servers.net/"
+    },
+    {
+      "rank": 30,
+      "domain": "appsflyersdk.com",
+      "status": 403
+    },
+    {
+      "rank": 34,
+      "domain": "aaplimg.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://aaplimg.com/"
+    },
+    {
+      "rank": 35,
+      "domain": "apple-dns.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://apple-dns.net/"
+    },
+    {
+      "rank": 37,
+      "domain": "cloudfront.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://cloudfront.net/"
+    },
+    {
+      "rank": 39,
+      "domain": "googleusercontent.com",
+      "status": 404
+    },
+    {
+      "rank": 40,
+      "domain": "office.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://office.net/"
+    },
+    {
+      "rank": 41,
+      "domain": "trafficmanager.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://trafficmanager.net/"
+    },
+    {
+      "rank": 43,
+      "domain": "sharepoint.com",
+      "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://sharepoint.com/"
+    },
+    {
+      "rank": 45,
+      "domain": "microsoftonline.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://microsoftonline.com/"
+    },
+    {
+      "rank": 59,
+      "domain": "goo.gl",
+      "status": 400
+    },
+    {
+      "rank": 60,
+      "domain": "gvt1.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://gvt1.com/"
+    },
+    {
+      "rank": 63,
+      "domain": "windows.net",
+      "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://windows.net/"
+    },
+    {
+      "rank": 64,
+      "domain": "windowsupdate.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://windowsupdate.com/"
+    },
+    {
+      "rank": 67,
+      "domain": "pv-cdn.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://pv-cdn.net/"
+    },
+    {
+      "rank": 73,
+      "domain": "tiktokcdn.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://tiktokcdn.com/"
+    },
+    {
+      "rank": 74,
+      "domain": "root-servers.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://root-servers.net/"
+    },
+    {
+      "rank": 75,
+      "domain": "akam.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://akam.net/"
+    },
+    {
+      "rank": 76,
+      "domain": "edgekey.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://edgekey.net/"
+    },
+    {
+      "rank": 81,
+      "domain": "baidu.com",
+      "error": "page.goto: Timeout 25000ms exceeded."
+    },
+    {
+      "rank": 83,
+      "domain": "tiktokv.com",
+      "status": 404
+    },
+    {
+      "rank": 88,
+      "domain": "gvt2.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://gvt2.com/"
+    },
+    {
+      "rank": 90,
+      "domain": "a2z.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://a2z.com/"
+    },
+    {
+      "rank": 93,
+      "domain": "highwebmedia.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://highwebmedia.com/"
+    },
+    {
+      "rank": 94,
+      "domain": "cdninstagram.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://cdninstagram.com/"
+    },
+    {
+      "rank": 98,
+      "domain": "gwfb.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://gwfb.net/"
+    },
+    {
+      "rank": 100,
+      "domain": "dellemc.com",
+      "error": "page.goto: Timeout 25000ms exceeded."
+    },
+    {
+      "rank": 104,
+      "domain": "yccdn.ru",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://yccdn.ru/"
+    },
+    {
+      "rank": 107,
+      "domain": "edgesuite.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://edgesuite.net/"
+    },
+    {
+      "rank": 110,
+      "domain": "office365.com",
+      "status": 403
+    },
+    {
+      "rank": 112,
+      "domain": "ytimg.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://ytimg.com/"
+    },
+    {
+      "rank": 117,
+      "domain": "aws.dev",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://aws.dev/"
+    },
+    {
+      "rank": 120,
+      "domain": "registrar-servers.com",
+      "status": 200
+    },
+    {
+      "rank": 121,
+      "domain": "3gppnetwork.org",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://3gppnetwork.org/"
+    },
+    {
+      "rank": 122,
+      "domain": "okcdn.ru",
+      "status": 403
+    },
+    {
+      "rank": 124,
+      "domain": "trbcdn.net",
+      "error": "page.goto: net::ERR_CERT_COMMON_NAME_INVALID at https://trbcdn.net/"
+    },
+    {
+      "rank": 126,
+      "domain": "cdn77.org",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://cdn77.org/"
+    },
+    {
+      "rank": 127,
+      "domain": "dnsowl.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://dnsowl.com/"
+    },
+    {
+      "rank": 133,
+      "domain": "amazon.dev",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://amazon.dev/"
+    },
+    {
+      "rank": 136,
+      "domain": "aliyuncs.com",
+      "status": 404
+    },
+    {
+      "rank": 137,
+      "domain": "static.microsoft",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://static.microsoft/"
+    },
+    {
+      "rank": 141,
+      "domain": "dns-parking.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://dns-parking.com/"
+    },
+    {
+      "rank": 142,
+      "domain": "amazon-adsystem.com",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://amazon-adsystem.com/"
+    },
+    {
+      "rank": 144,
+      "domain": "archive.org",
+      "status": 200
+    },
+    {
+      "rank": 145,
+      "domain": "forms.gle",
+      "status": 400
+    },
+    {
+      "rank": 146,
+      "domain": "azurefd.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://azurefd.net/"
+    },
+    {
+      "rank": 148,
+      "domain": "godaddy.com",
+      "status": 200
+    },
+    {
+      "rank": 149,
+      "domain": "app-measurement.com",
+      "status": 404
+    },
+    {
+      "rank": 151,
+      "domain": "app-analytics-services.com",
+      "status": 404
+    },
+    {
+      "rank": 152,
+      "domain": "fastly-edge.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://fastly-edge.com/"
+    },
+    {
+      "rank": 158,
+      "domain": "iiko.it",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://iiko.it/"
+    },
+    {
+      "rank": 159,
+      "domain": "2mdn.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://2mdn.net/"
+    },
+    {
+      "rank": 160,
+      "domain": "jomodns.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://jomodns.com/"
+    },
+    {
+      "rank": 162,
+      "domain": "tm-azurefd.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://tm-azurefd.net/"
+    },
+    {
+      "rank": 164,
+      "domain": "hichina.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://hichina.com/"
+    },
+    {
+      "rank": 166,
+      "domain": "akamaized.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://akamaized.net/"
+    },
+    {
+      "rank": 172,
+      "domain": "ax-msedge.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://ax-msedge.net/"
+    },
+    {
+      "rank": 173,
+      "domain": "azurewebsites.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://azurewebsites.net/"
+    },
+    {
+      "rank": 175,
+      "domain": "yandexcloud.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://yandexcloud.net/"
+    },
+    {
+      "rank": 178,
+      "domain": "msftconnecttest.com",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://msftconnecttest.com/"
+    },
+    {
+      "rank": 179,
+      "domain": "nflxso.net",
+      "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://nflxso.net/"
+    },
+    {
+      "rank": 180,
+      "domain": "vkuserphoto.ru",
+      "error": "page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://vkuserphoto.ru/"
+    }
+  ]
+}

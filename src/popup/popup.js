@@ -3,6 +3,7 @@ import { buildReport, GRADES } from '../shared/scoring.js';
 import { siteOf } from '../shared/domain.js';
 import { loadSettings, siteMode, isPaused } from '../shared/settings.js';
 import { adviceFor, browserTip, detectBrowser } from '../shared/guides.js';
+import { compareLine } from '../shared/crawlstats.js';
 
 const $ = id => document.getElementById(id);
 function el(tag, props, ...kids) {
@@ -20,6 +21,8 @@ const forced = Number(new URLSearchParams(location.search).get('tab'));
 const tab = forced ? await api.tabs.get(forced) : (await api.tabs.query({ active: true, currentWindow: true }))[0];
 const key = 'tab:' + tab?.id;
 const browser = await detectBrowser();
+// Results of the real-world crawl bundled with this version (scripts/crawl.mjs), if any.
+const crawlStats = await fetch(api.runtime.getURL('data/crawl-stats.json')).then(r => r.json(), () => null);
 let settings = await loadSettings(api);
 const webPage = /^https?:/.test(tab?.url ?? '');
 const site = webPage ? siteOf(new URL(tab.url).hostname) : '';
@@ -73,7 +76,9 @@ function renderShield() {
   const until = settings.pausedUntil;
   $('pause-text').textContent = !paused ? '' : until === -1 ? 'Paused until you restart the browser.'
     : `Paused until ${new Date(until).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.`;
-  for (const b of document.querySelectorAll('[data-pause]')) b.hidden = (b.dataset.pause === '0') !== paused;
+  // Nothing to pause if protection isn't on anywhere.
+  const anyOn = settings.protectDefault || Object.values(settings.sites).includes('on') || settings.privateMode === 'always';
+  for (const b of document.querySelectorAll('[data-pause]')) b.hidden = b.dataset.pause === '0' ? !paused : paused || !anyOn;
   const mismatch = pageProtected !== null && pageProtected !== on;
   $('mismatch').hidden = !mismatch;
   $('mismatch-text').textContent = on
@@ -119,6 +124,9 @@ function render(state) {
   $('score').textContent = state ? r.score : '–';
   $('fill').style.width = `${r.score}%`;
   $('label').textContent = state ? g.label : 'No report for this page';
+  const compare = state && webPage ? compareLine(r.score, r.host, crawlStats) : null;
+  $('compare').hidden = !compare;
+  $('compare').textContent = compare ?? '';
 
   const n = r.items.length;
   $('sub').textContent = !state ? ''

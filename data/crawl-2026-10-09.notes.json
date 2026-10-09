@@ -1,0 +1,15 @@
+{
+  "about": "Follow-up checks after the crawl, on 2026-10-09, same machine and network. Each site was visited with protection off, on, off, on.",
+  "botChallenges": {
+    "cloudflare.net": "Cloudflare challenge (\"Just a moment...\") with protection on, and still with protection off afterwards.",
+    "openai.com": "Cloudflare challenge (\"Just a moment...\") with protection on, and still with protection off afterwards.",
+    "epicgames.com": "Cloudflare challenge (\"Just a moment...\") with protection on, and still with protection off afterwards.",
+    "nih.gov": "Cloudflare block (\"Attention Required!\") with protection on, and still with protection off afterwards.",
+    "nytimes.com": "Bot block page from the first follow-up visit, with protection off."
+  },
+  "blockedNotDetected": {
+    "microsoft.com": "Microsoft Clarity requests failed with ERR_BLOCKED_BY_CLIENT: blocked, but loaded via fetch, so v0.3.0 reported it as not blocked. Fixed in the extension afterwards.",
+    "skype.com": "Same Microsoft Clarity loading pattern as microsoft.com.",
+    "intuit.com": "FullStory reported as not blocked; likely the same fetch-based loading."
+  }
+}
