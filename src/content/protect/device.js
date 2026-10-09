@@ -4,7 +4,8 @@
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { P, override, overrideGetter, adjust } = k;
+  const { P, override, overrideGetter, adjust, enable } = k;
+  enable('device');
 
   const lang = String(navigator.language || 'en').split('-')[0].toLowerCase();
   for (const [k, value] of [['level', 1], ['charging', true], ['chargingTime', 0], ['dischargingTime', Infinity]]) {

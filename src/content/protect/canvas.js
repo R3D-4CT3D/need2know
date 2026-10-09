@@ -4,7 +4,8 @@
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { W, P, apply, doc, seedNow, mix, override, adjust } = k;
+  const { W, P, apply, doc, seedNow, mix, override, adjust, enable } = k;
+  enable('canvas');
 
   /* ---------- canvas noise ---------- */
   // Sets the lowest bit of one color channel in about 10% of visible pixels. Which pixels,

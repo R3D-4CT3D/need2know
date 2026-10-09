@@ -110,7 +110,8 @@ Windows**. Settings shows whether it's allowed. Once it is:
 | Session recorders, fingerprinting services (and optionally fraud/bot detection) | **Blocked** at the network level with `declarativeNetRequest`, from rules generated from `shared/vendors.js`. |
 | "Do not sell or share" | **Global Privacy Control:** `navigator.globalPrivacyControl` plus the `Sec-GPC: 1` header. |
 | WebRTC IP leaks | **Optional:** limits WebRTC to the default public interface. |
-| Fonts, screen size, time zone | **Not hidden.** Hiding them breaks sites; the popup explains browser settings that help. |
+| Installed fonts | **Standard fonts only.** Font probes (canvas and DOM) see only the fonts that ship with your OS. Rendering is untouched; only measurements of probe-style elements change. |
+| Screen size, time zone | **Not hidden.** Hiding them breaks sites; the popup explains browser settings that help. |
 
 Against the real FingerprintJS library, Protect mode gives you a **different `visitorId` on every
 site** and the same one on repeat visits to a site. The end-to-end test checks exactly that.
@@ -203,8 +204,9 @@ No data leaves your browser. Firefox's manifest declares `data_collection_permis
 
 ## Known limitations
 
-- **Fonts aren't hidden.** Font probing is detected, not blocked; doing it safely needs browser support
-  (Firefox Strict mode and Brave do).
+- **Font protection covers measurement-based probing** (canvas `measureText` and sizing inline-styled
+  elements). A page that measures its own text in a font you installed would get the standard-font
+  size instead; switch the defense off for that site if it misbehaves.
 - **Protection isn't a guarantee.** Sites have many signals. Protect mode removes the strongest ones,
   but IP address, screen size, time zone and language still narrow you down.
 - **Private windows are tested by unit tests, not end to end.** Playwright can't open an incognito

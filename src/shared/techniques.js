@@ -23,7 +23,7 @@ export const TECHNIQUES = {
     why: () => 'Rendered a silent sound and measured the output. Your audio hardware and software leave a numeric signature.',
   },
   'font-probe': {
-    title: 'Font probing', weight: 20, min: 20,
+    title: 'Font probing', weight: 20, min: 20, defense: 'generic', guard: 'fonts',
     why: r => `Measured text in ${r.x} font settings to work out which fonts you have. That reveals your OS and apps like Office or Adobe.`,
   },
   'fp-vendor': {

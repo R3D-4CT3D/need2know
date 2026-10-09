@@ -97,6 +97,13 @@
     });
     defineProp(proto, name, d);
   }
+  // For getters whose native call itself needs wrapping: around(native, self).
+  function aroundGetter(proto, name, around) {
+    const d = proto && getDesc(proto, name);
+    if (!d || typeof d.get !== 'function') return;
+    d.get = new ProxyCtor(d.get, { apply: (native, self, args) => on ? around(native, self) : apply(native, self, args) });
+    defineProp(proto, name, d);
+  }
   // For methods returning a value (or a promise of one) that we adjust after the fact.
   function adjust(proto, name, fn) {
     override(proto, name, (native, self, args) => {
@@ -105,8 +112,13 @@
     });
   }
 
+  // Defense files register themselves, so Web Workers can be given the same set (hooks.js).
+  const enabled = new Set();
+  const enable = name => enabled.add(name);
+  const workerConfig = () => on ? { seed: seedNow(), defenses: [...enabled] } : null;
+
   Object.defineProperty(W, '__wssProtect', {
     configurable: true,
-    value: { W, P, apply, doc, seedNow, mix, override, overrideGetter, adjust },
+    value: { W, P, apply, doc, seedNow, mix, override, overrideGetter, aroundGetter, adjust, enable, workerConfig },
   });
 })();

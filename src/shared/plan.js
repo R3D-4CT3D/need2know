@@ -22,6 +22,7 @@ export const DEFENSE_FILES = {
   gpu: 'content/protect/gpu.js',
   hardware: 'content/protect/hardware.js',
   device: 'content/protect/device.js',
+  fonts: 'content/protect/fonts.js',
 };
 
 export function protectFiles(s) {

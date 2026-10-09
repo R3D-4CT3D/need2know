@@ -95,7 +95,7 @@ const ROWS = [
   ['voices', 'Speech voices', 'generic'],
   ['keyboard', 'Keyboard layout', 'generic'],
   ['hints', 'Exact OS version and device model', 'generic'],
-  ['fonts', 'Installed fonts found', 'visible'],
+  ['fonts', 'Installed fonts found', 'generic'],
   ['screen', 'Screen size', 'visible'],
   ['timezone', 'Time zone', 'visible'],
   ['language', 'Languages', 'visible'],

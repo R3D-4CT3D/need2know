@@ -4,7 +4,8 @@
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { P, overrideGetter } = k;
+  const { P, overrideGetter, enable } = k;
+  enable('hardware');
 
   overrideGetter(P('Navigator'), 'hardwareConcurrency', v => typeof v === 'number' ? (v <= 4 ? 4 : 8) : v);
   overrideGetter(P('Navigator'), 'deviceMemory', v => typeof v === 'number' ? (v >= 4 ? 8 : 4) : v);

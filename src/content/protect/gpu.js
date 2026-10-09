@@ -4,7 +4,8 @@
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { P, adjust } = k;
+  const { P, adjust, enable } = k;
+  enable('gpu');
 
   const VENDOR_BUCKETS = [
     ['NVIDIA', /nvidia|geforce|quadro|rtx|gtx/i], ['AMD', /\bamd\b|radeon|\bati\b/i], ['Intel', /intel/i],

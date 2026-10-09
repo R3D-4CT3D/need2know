@@ -4,7 +4,8 @@
   'use strict';
   const k = window.__wssProtect;
   if (!k) return;
-  const { P, apply, seedNow, mix, override, adjust } = k;
+  const { P, apply, seedNow, mix, override, adjust, enable } = k;
+  enable('audio');
 
   // Adds noise around ten-millionths of the signal: inaudible, but it changes the audio hash.
   const AB = P('AudioBuffer');

@@ -117,6 +117,8 @@ try {
 
   console.log('\nDefaults');
   const raw = await visit(SITE + 'protect.html');
+  const rawFonts = (await visit(SITE + 'fonts.html')).result ?? {};
+  check('baseline: this machine really has the non-standard fonts installed', rawFonts.dom?.includes('Ubuntu') && rawFonts.dom?.includes('FontAwesome'), JSON.stringify(rawFonts));
   check('protection is off by default: real GPU, recorder not blocked', raw.result?.gpu && !/ Graphics/.test(raw.result.gpu) && statusOf(raw.report, 'canvas-fp') === 'active', raw.result?.gpu);
   check('GPC is on by default', raw.result?.gpc === true && raw.result?.gpcHeader === '1');
 
@@ -165,6 +167,14 @@ try {
   check('FingerprintJS visitorId: stable on one site', fpId(f1) && fpId(f1) === fpId(f2), `${fpId(f1)} / ${fpId(f2)}`);
   check('FingerprintJS visitorId: different on another site', fpId(f1) && fpId(f3) && fpId(f1) !== fpId(f3), `${fpId(f1)} / ${fpId(f3)}`);
   check('popup statuses: canvas neutralized, GPU neutralized', statusOf(a1.report, 'canvas-fp') === 'neutralized' && statusOf(a1.report, 'webgl-gpu') === 'neutralized');
+
+  {
+    const f = await visit(SITE + 'fonts.html');
+    const F = f.result ?? {};
+    check('fonts: installed non-standard fonts hidden (canvas and DOM)', !F.canvas?.includes('Ubuntu') && !F.dom?.includes('Ubuntu') && !F.dom?.includes('FontAwesome'), JSON.stringify(F));
+    check('fonts: standard and page web fonts still visible, rendering untouched', F.dom?.includes('DejaVu Sans') && F.dom?.includes('Page Font') && F.canvas?.includes('DejaVu Sans') && /Ubuntu/.test(F.rendered) && !f.errors.length, JSON.stringify(F));
+    check('fonts: probing still detected, marked neutralized', statusOf(f.report, 'font-probe') === 'neutralized', statusOf(f.report, 'font-probe'));
+  }
 
   console.log('\nPer-site off (default on, localhost off)');
   await setSettings({ protectDefault: true, sites: { localhost: 'off' } }, 'wss-observe,wss-protect');

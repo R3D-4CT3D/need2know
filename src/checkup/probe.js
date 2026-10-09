@@ -47,7 +47,8 @@
   // Installed fonts, measured the way fingerprinters do.
   const fonts = ['Calibri', 'Cambria', 'Consolas', 'Segoe UI', 'Aptos', 'Menlo', 'Monaco', 'Helvetica Neue', 'Avenir Next', 'Futura',
     'Ubuntu', 'Cantarell', 'DejaVu Sans', 'Liberation Sans', 'Noto Sans', 'Roboto', 'Fira Code', 'JetBrains Mono', 'Cascadia Code',
-    'Source Code Pro', 'Garamond', 'Century Gothic', 'Franklin Gothic Medium', 'Rockwell', 'Minion Pro', 'Myriad Pro', 'Papyrus'];
+    'Source Code Pro', 'Garamond', 'Century Gothic', 'Franklin Gothic Medium', 'Rockwell', 'Minion Pro', 'Myriad Pro', 'Papyrus',
+    'FontAwesome', 'Font Awesome 6 Free', 'Aptos', 'Lato', 'Open Sans', 'Montserrat'];
   const m = document.createElement('canvas').getContext('2d');
   const width = f => { m.font = `72px ${f}`; return m.measureText('mmmmmmmmmmlli').width; };
   const bases = ['monospace', 'serif', 'sans-serif'].map(b => [b, width(b)]);

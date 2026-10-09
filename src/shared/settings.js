@@ -5,7 +5,7 @@ export const DEFAULTS = Object.freeze({
   sites: {},                 // per-site overrides: { 'example.com': 'on' | 'off' }
   privateMode: 'follow',     // private windows: 'follow' the above, or 'always' protect
   pausedUntil: 0,            // protection paused until this time (ms); -1 = until browser restart
-  defenses: { canvas: true, audio: true, gpu: true, hardware: true, device: true },
+  defenses: { canvas: true, audio: true, gpu: true, hardware: true, device: true, fonts: true },
   blockReplay: true,         // where protection is on: block session recorders
   blockFingerprinters: true, // ...fingerprinting services
   blockFraud: false,         // ...fraud and bot detection (can break logins and payments)
@@ -26,6 +26,7 @@ export const DEFENSES = {
   gpu: { title: 'Generic graphics chip', detail: 'Sites see your GPU brand (e.g. "NVIDIA Graphics"), not the exact model.' },
   hardware: { title: 'Generic CPU and memory', detail: 'Processor cores and memory are rounded to common values.' },
   device: { title: 'Fewer device details', detail: 'Battery, speech voices, keyboard layout, camera and mic count, and exact OS version are hidden or generalized.' },
+  fonts: { title: 'Standard fonts only', detail: 'Font probes see only the fonts that come with your operating system, not ones you installed (like Office, Adobe or coding fonts). Pages still display with your real fonts.' },
 };
 
 export async function loadSettings(api) {

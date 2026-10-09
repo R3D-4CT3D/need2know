@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Font protection test</title>
+<style>body{font:17px/1.6 Georgia,serif;max-width:680px;margin:40px auto;padding:0 16px}pre{font-size:13px}</style>
+<!-- A web font the page loads itself: protection must leave it alone. -->
+<style>@font-face { font-family: "Page Font"; src: local("DejaVu Serif"); }</style></head>
+<body>
+  <h1>Font protection test</h1>
+  <p>Probes for installed fonts the way fingerprinting scripts do, with canvas text and with hidden spans. With "Standard fonts only" on, fonts that don't ship with your OS should read as missing; the page's own web font and standard fonts should still read as present.</p>
+  <p id="sample" style="font-family: Ubuntu, sans-serif">This sentence is rendered in Ubuntu if you have it: rendering never changes.</p>
+  <pre id="out">Measuring…</pre>
+  <p id="status"></p>
+  <script>
+  addEventListener('load', async () => {
+    await document.fonts.load('16px "Page Font"').catch(() => {});
+    const FONTS = ['Ubuntu', 'FontAwesome', 'DejaVu Sans', 'Page Font', 'Not A Real Font'];
+    // Enough other names that it counts as probing (20+ font settings), like a real script.
+    const FILLER = ['Calibri', 'Cambria', 'Consolas', 'Menlo', 'Monaco', 'Futura', 'Optima', 'Roboto', 'Lato', 'Garamond'];
+    const BASES = ['monospace', 'serif'];
+    const text = 'mmmmmmmmmmlli1WQ';
+    // Canvas probing.
+    const x = document.createElement('canvas').getContext('2d');
+    const cw = f => { x.font = `72px ${f}`; return x.measureText(text).width; };
+    for (const f of FILLER) for (const b of BASES) cw(`"${f}", ${b}`);
+    const canvas = FONTS.filter(f => BASES.some(b => cw(`"${f}", ${b}`) !== cw(b)));
+    // DOM probing.
+    const box = document.createElement('div'); box.style.cssText = 'position:absolute;left:-9999px;font-size:72px;visibility:hidden';
+    document.body.append(box);
+    const span = f => { const s = document.createElement('span'); s.textContent = text; s.style.fontFamily = f; box.append(s); return s; };
+    const base = Object.fromEntries(BASES.map(b => [b, span(b)]));
+    const dom = FONTS.filter(f => BASES.some(b => { const s = span(`"${f}", ${b}`); return s.offsetWidth !== base[b].offsetWidth || s.offsetHeight !== base[b].offsetHeight; }));
+    box.remove();
+    // Rendering is untouched: the visible sample keeps its real font.
+    const rendered = getComputedStyle(document.getElementById('sample')).fontFamily;
+    const r = { canvas, dom, rendered };
+    document.getElementById('out').textContent = JSON.stringify(r, null, 2);
+    const st = document.getElementById('status'); st.dataset.result = JSON.stringify(r); st.dataset.done = '1'; st.textContent = 'done';
+  });
+  </script>
+</body>
+</html>

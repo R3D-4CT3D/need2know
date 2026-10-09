@@ -32,7 +32,7 @@ const BUILT_IN = {
 // Advice for things Protect mode can't fully handle, by technique.
 const SPECIFIC = {
   'font-probe': {
-    all: 'Fonts can\'t be hidden by an extension without breaking pages. Every unusual font you install makes you easier to single out, so uninstall ones you don\'t use.',
+    all: 'Turn on "Standard fonts only" so probes see only the fonts that come with your operating system. Every unusual font you install makes you easier to single out, so uninstalling ones you don\'t use helps too.',
     firefox: 'Firefox\'s Strict tracking protection limits websites to standard system fonts.',
     brave: 'Brave limits websites to standard system fonts while Shields are up.',
   },
