@@ -1,6 +1,6 @@
 {
   "name": "need2know",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "description": "What Sites See: a cross-browser extension that catches websites fingerprinting you in real time.",
   "type": "module",

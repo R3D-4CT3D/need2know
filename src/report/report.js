@@ -39,7 +39,7 @@ if (!state) {
   $('m-score').textContent = `${report.score}/100 (${GRADES[report.grade].label})`;
   $('m-tool').textContent = `${record.tool.name} ${record.tool.version}`;
 
-  const outcome = { active: ['Got through', 'no'], partial: ['Partly stopped', 'ok'], neutralized: ['Neutralized', 'ok'], blocked: ['Blocked', 'ok'] };
+  const outcome = { active: [report.protect ? 'Unable to block' : 'Not blocked (protection off)', 'no'], partial: ['Partly stopped', 'ok'], neutralized: ['Neutralized', 'ok'], blocked: ['Blocked', 'ok'] };
   $('rows').replaceChildren(...report.items.map(i => {
     const [text, cls] = outcome[i.status];
     return el('tr', {},

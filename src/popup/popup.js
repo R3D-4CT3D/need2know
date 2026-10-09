@@ -35,6 +35,11 @@ for (const b of document.querySelectorAll('[data-open]')) {
   });
 }
 
+// The two action buttons open full pages for this tab's site.
+const openPage = path => { api.tabs.create({ url: api.runtime.getURL(path) }); window.close(); };
+$('request').addEventListener('click', () => openPage(`request/request.html?host=${encodeURIComponent(new URL(tab.url).hostname)}&tab=${tab.id}`));
+$('evidence').addEventListener('click', () => openPage(`report/report.html?tab=${tab.id}`));
+
 // Firefox treats <all_urls> as opt-in, so the user may need to grant it. In Chromium it's
 // granted at install and this resolves true. permissions.request() must run directly inside
 // the click handler, with no await before it, or the browser rejects it as not user-initiated.
@@ -156,7 +161,7 @@ function render(state) {
           s.thirdParty ? el('span', { class: 'tag', text: ' · 3rd party' }) : null))) : null,
       advice.done
         ? el('p', { class: 'status ok', text: `✓ ${advice.done}` })
-        : el('p', { class: 'status no', text: '✗ Not blocked: this one worked on you' }),
+        : el('p', { class: 'status no', text: context.siteOn ? '✗ Unable to block: this fingerprinted you' : '✗ Protection is off here: this fingerprinted you' }),
       advice.steps.length ? el('details', { class: 'fix' },
         el('summary', { text: stopped ? 'More you can do' : 'How to stop this' }),
         el('ol', {}, advice.steps.map(s => el('li', { text: s })))) : null);

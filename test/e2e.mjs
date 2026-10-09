@@ -350,6 +350,27 @@ try {
     await Promise.all([site.close(), popup.page.close()]);
   }
   {
+    // Click the popup's own buttons, as a user would, and check each opens its page.
+    const site = await ctx.newPage();
+    await site.goto(SITE + 'shop.html');
+    await site.waitForTimeout(2500);
+    const tabId = await sw.evaluate(async u => (await chrome.tabs.query({ url: u }))[0].id, SITE + 'shop.html');
+    for (const [button, path] of [['#request', 'request/request.html'], ['#evidence', 'report/report.html']]) {
+      const popup = await extPage(`popup/popup.html?tab=${tabId}`, '#act:not([hidden])');
+      const opened = ctx.waitForEvent('page', { timeout: 5000 }).catch(() => null);
+      await popup.page.click(button);
+      const page = await opened;
+      if (page) await page.waitForLoadState().catch(() => {});
+      check(`popup button ${button} opens ${path}`, page?.url().includes(path) && page.url().includes(String(tabId)), page?.url() ?? 'no page opened');
+      await page?.close();
+      if (!popup.page.isClosed()) await popup.page.close();
+    }
+    const popup = await extPage(`popup/popup.html?tab=${tabId}`, '.status');
+    const statuses = await popup.page.$$eval('.status.no', ps => ps.map(p => p.textContent));
+    check('popup wording for attempts that got through', statuses.length && statuses.every(t => /this fingerprinted you$/.test(t)), JSON.stringify(statuses.slice(0, 2)));
+    await Promise.all([site.close(), popup.page.close()]);
+  }
+  {
     const { page, errors } = await extPage('history/history.html', '#rows tr');
     const followers = await page.$$eval('#bars li', lis => lis.map(li => li.textContent));
     const due = await page.$$eval('td.req', tds => tds.map(td => td.textContent));
